@@ -1,0 +1,17 @@
+                Completely Open Source License
+                    Version 1, July 2025
+
+ Not Copyright 2025 ETAGamer
+
+ Everyone is permitted to copy and distribute verbatim or modified
+ copies of this license document, and changing it is completely allowed.
+
+                    Completely Open Source License
+   TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
+
+  0. You may do literally whatever you want with the material associated.
+  1. You may steal it as your own without changing anything, skid the code,
+  use some of its files, etc.
+  2. You may NOT copyright/trademark any of the material.
+  3. As said earlier, you can do anything you can imagine with the associated
+  material as long as you don't copyright/trademark any of the material.
