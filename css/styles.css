@@ -8,6 +8,10 @@ body {
   overflow-x: hidden;
   height: 100vh;
   position: relative;
+  .bottom {
+    margin-top: auto;
+    text-align: center;
+  }
 }
 
 @keyframes flicker {
