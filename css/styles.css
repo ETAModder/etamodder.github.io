@@ -1,0 +1,124 @@
+/* ===== Universal Reset ===== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ===== Body Styling ===== */
+body {
+  background-color: #0d0d0d;
+  color: #00ff88;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 16px;
+  line-height: 1.5;
+  padding: 20px;
+  text-shadow: 0 0 3px #00ff88, 0 0 6px #00cc66;
+}
+
+/* ===== Links ===== */
+a {
+  color: #00ff88;
+  text-decoration: underline;
+}
+
+a:hover {
+  color: #00ffaa;
+  text-shadow: 0 0 5px #00ffaa;
+}
+
+/* ===== Headings ===== */
+h1, h2, h3, h4, h5, h6 {
+  color: #00ff88;
+  text-shadow: 0 0 5px #00ff88;
+  margin-bottom: 10px;
+}
+
+/* ===== Terminal Box ===== */
+.terminal {
+  background-color: #000000;
+  border: 1px solid #00ff88;
+  padding: 15px;
+  margin-top: 20px;
+  overflow-x: auto;
+  font-size: 14px;
+  line-height: 1.4;
+  white-space: pre-wrap;
+  border-radius: 4px;
+  box-shadow: 0 0 10px #00ff88;
+}
+
+/* ===== Buttons ===== */
+button, .button {
+  background-color: #111;
+  color: #00ff88;
+  border: 1px solid #00ff88;
+  padding: 8px 16px;
+  font-family: inherit;
+  font-size: 14px;
+  cursor: pointer;
+  transition: 0.2s ease;
+  text-shadow: 0 0 3px #00ff88;
+}
+
+button:hover, .button:hover {
+  background-color: #00ff88;
+  color: #000;
+  text-shadow: none;
+}
+
+/* ===== Input Fields ===== */
+input, textarea, select {
+  background-color: #000;
+  color: #00ff88;
+  border: 1px solid #00ff88;
+  padding: 6px;
+  font-family: inherit;
+  margin-top: 5px;
+  margin-bottom: 10px;
+  width: 100%;
+}
+
+/* ===== Container / Wrapper ===== */
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* ===== Scrollbar (for Webkit Browsers) ===== */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #111;
+}
+::-webkit-scrollbar-thumb {
+  background: #00ff88;
+}
+
+/* ===== Code Block ===== */
+code, pre {
+  background-color: #111;
+  color: #00ff88;
+  padding: 10px;
+  border: 1px solid #00ff88;
+  border-radius: 3px;
+  font-family: 'Courier New', Courier, monospace;
+  overflow-x: auto;
+}
+
+/* ===== Flashing Cursor (for realism) ===== */
+.cursor {
+  display: inline-block;
+  width: 10px;
+  height: 1em;
+  background: #00ff88;
+  animation: blink 1s step-end infinite;
+  vertical-align: middle;
+}
+
+@keyframes blink {
+  50% {
+    background: transparent;
+  }
+}
