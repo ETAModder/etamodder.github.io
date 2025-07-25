@@ -45,3 +45,12 @@ body::before {
 body, h1, h2, h3, p, a {
   text-shadow: 0 0 5px #00ff00;
 }
+
+a {
+  color: #4EFF4E;
+  text-decoration: none;
+}
+a:hover {
+  color: #00ff00;
+  text-decoration: underline;
+}
