@@ -54,3 +54,12 @@ a:hover {
   color: #00ff00;
   text-decoration: underline;
 }
+
+.banner {
+  color: lime;
+  font-family: monospace;
+  font-size: 12px;
+  white-space: pre;
+  text-align: center;
+  margin-top: 20px;
+}
