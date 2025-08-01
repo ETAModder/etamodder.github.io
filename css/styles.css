@@ -51,15 +51,14 @@ a {
   text-decoration: none;
 }
 a:hover {
-  color: #00ff00;
+  color: #007c00;
   text-decoration: underline;
 }
 
 .banner {
-  color: lime;
+  color: #00ff00;
   font-family: monospace;
   font-size: 12px;
   white-space: pre;
-  text-align: center;
   margin-top: 20px;
 }
