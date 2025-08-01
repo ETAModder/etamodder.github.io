@@ -90,3 +90,41 @@ a:hover {
   padding: .5em;
   border-bottom: 1px dashed #555;
 }
+
+#editor {
+  margin: 20px auto;
+  width: 80%;
+  height: 300px;
+  border: 1px solid #0f0;
+  background: #000;
+  box-shadow: 0 0 10px #00ff00;
+}
+
+button {
+  background: #000;
+  color: #00ff00;
+  border: 1px solid #00ff00;
+  font-family: monospace;
+  font-size: 1rem;
+  padding: 8px 16px;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: 0.2s;
+}
+
+button:hover {
+  background: #00ff00;
+  color: #000;
+}
+
+#output {
+  background: #000;
+  color: #00ff00;
+  border: 1px dashed #0f0;
+  padding: 12px;
+  width: 80%;
+  margin: 15px auto;
+  white-space: pre-wrap;
+  box-shadow: 0 0 8px #00ff00;
+  font-family: monospace;
+}
