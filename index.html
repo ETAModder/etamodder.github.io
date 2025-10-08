@@ -1,44 +1,113 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <title>eta@home:~$</title>
-  <link rel="stylesheet" href="xterm/css/xterm.css" />
-  <link rel="stylesheet" href="https://unpkg.com/xterm/css/xterm.css" />
-  <script src="https://unpkg.com/xterm/lib/xterm.js"></script>
+  <meta charset="UTF-8" />
+  <title>etamodder boring site</title>
+  <link rel="stylesheet" href="https://unpkg.com/xp.css" />
   <style>
-    html, body {
+    body {
+      background: #008080;
       margin: 0;
-      height: 100%;
-      background: black;
-      overflow: hidden;
-      font-family: monospace;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: "Tahoma", sans-serif;
     }
-    #topbar, #bottombar {
-      position: fixed;
-      left: 0;
-      width: 100%;
-      background: #000;
-      color: #fff;
+    .window {
+      width: 600px;
+      height: 400px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 2px 2px 6px rgba(0,0,0,0.5);
+    }
+    .window-body {
+      flex: 1;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      background: #ece9d8;
+    }
+    .fun-box {
+      border: 2px groove #ccc;
+      background: white;
+      padding: 10px;
+      flex: 1;
+      overflow: auto;
+    }
+    .xp-button {
+      background: #e0e0e0;
+      border: 1px solid #808080;
+      padding: 3px 10px;
+      cursor: pointer;
       font-weight: bold;
-      padding: 2px 6px;
     }
-    #topbar { top: 0; border-bottom: 1px solid #333; }
-    #bottombar { bottom: 0; border-top: 1px solid #333; }
-    #terminal {
-      position: absolute;
-      top: 24px;
-      bottom: 24px;
-      left: 0;
-      right: 0;
-      overflow: hidden;
+    .xp-button:active {
+      background: #c0c0c0;
+      border-top: 1px solid #404040;
+      border-left: 1px solid #404040;
     }
   </style>
 </head>
 <body>
-  <div id="terminal"></div>
+  <div class="window">
+    <div class="title-bar">
+      <div class="title-bar-text">etamodder boring site</div>
+      <div class="title-bar-controls">
+        <button aria-label="Minimize"></button>
+        <button aria-label="Maximize"></button>
+        <button aria-label="Close" id="closeBtn"></button>
+      </div>
+    </div>
 
-  <script src="xterm/lib/xterm.js"></script>
-  <script src="js/main.js"></script>
+    <div class="window-body">
+      <div class="fun-box" id="output">
+        <b>hello</b><br><br>
+        this is a site with nothing interesting or remotely cool<br><br>
+        why are you even here in the first place
+      </div>
+      <div>
+        <button class="xp-button" id="btnJoke">show message</button>
+        <button class="xp-button" id="btnColor">change da background</button>
+      </div>
+    </div>
+
+    <div class="status-bar">
+      <p class="status-bar-field">status: doing things</p>
+      <p class="status-bar-field">xp mode probably on</p>
+    </div>
+  </div>
+
+  <script>
+    const output = document.getElementById("output")
+    const btnJoke = document.getElementById("btnJoke")
+    const btnColor = document.getElementById("btnColor")
+    const closeBtn = document.getElementById("closeBtn")
+
+    const messages = [
+      "you clicked a thing",
+      "peak xp.css action",
+      "this is a message",
+      "keep clicking",
+      "more fun messages",
+      "javascript is fun"
+    ]
+
+    btnJoke.onclick = () => {
+      output.innerHTML += "<br>" + messages[Math.floor(Math.random() * messages.length)]
+      output.scrollTop = output.scrollHeight
+    }
+
+    btnColor.onclick = () => {
+      const colors = ["#ece9d8", "#fff", "#d6eaff", "#e8ffd6", "#f8e8ff"]
+      document.querySelector(".window-body").style.background =
+        colors[Math.floor(Math.random() * colors.length)]
+    }
+
+    closeBtn.onclick = () => {
+      alert("why close me")
+    }
+  </script>
 </body>
 </html>
