@@ -1,28 +1,44 @@
 <!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>@ETAModder ➜ /workspaces/ETAModder (main) $</title>
-        <link rel="icon" href="/favicon.ico" type="image/x-icon" />
-        <link rel="stylesheet" href="/css/styles.css" type="text/css">
-    </head>
-    <body>
-        <pre class="banner">
-██████████ ███████████   █████████   ██████   ██████              █████     █████                   
-░░███░░░░░█░█░░░███░░░█  ███░░░░░███ ░░██████ ██████              ░░███     ░░███                    
- ░███  █ ░ ░   ░███  ░  ░███    ░███  ░███░█████░███   ██████   ███████   ███████   ██████  ████████ 
- ░██████       ░███     ░███████████  ░███░░███ ░███  ███░░███ ███░░███  ███░░███  ███░░███░░███░░███
- ░███░░█       ░███     ░███░░░░░███  ░███ ░░░  ░███ ░███ ░███░███ ░███ ░███ ░███ ░███████  ░███ ░░░ 
- ░███ ░   █    ░███     ░███    ░███  ░███      ░███ ░███ ░███░███ ░███ ░███ ░███ ░███░░░   ░███     
- ██████████    █████    █████   █████ █████     █████░░██████ ░░████████░░████████░░██████  █████    
-░░░░░░░░░░    ░░░░░    ░░░░░   ░░░░░ ░░░░░     ░░░░░  ░░░░░░   ░░░░░░░░  ░░░░░░░░  ░░░░░░  ░░░░░     
-        </pre>
-        <h3>This site is in development and currently being used as a CDN.</h3>
-        <p>Projects page: <strong><a href="projects.html">[X]</a></strong></p>
-        <p>Javascript editor: <strong><a href="editor.html">[X]</a></strong></p>
-        <p>Star it on github to prove your epicness.</p>
-        <p><strong>Or don't, I honestly don't care.</strong></p>
-        <p class="bottom"><i>- ETA</i></p>
-    </body>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>eta@home:~$</title>
+  <link rel="stylesheet" href="xterm/css/xterm.css" />
+  <link rel="stylesheet" href="https://unpkg.com/xterm/css/xterm.css" />
+  <script src="https://unpkg.com/xterm/lib/xterm.js"></script>
+  <style>
+    html, body {
+      margin: 0;
+      height: 100%;
+      background: black;
+      overflow: hidden;
+      font-family: monospace;
+    }
+    #topbar, #bottombar {
+      position: fixed;
+      left: 0;
+      width: 100%;
+      background: #000;
+      color: #fff;
+      font-weight: bold;
+      padding: 2px 6px;
+    }
+    #topbar { top: 0; border-bottom: 1px solid #333; }
+    #bottombar { bottom: 0; border-top: 1px solid #333; }
+    #terminal {
+      position: absolute;
+      top: 24px;
+      bottom: 24px;
+      left: 0;
+      right: 0;
+      overflow: hidden;
+    }
+  </style>
+</head>
+<body>
+  <div id="terminal"></div>
+
+  <script src="xterm/lib/xterm.js"></script>
+  <script src="js/main.js"></script>
+</body>
 </html>
