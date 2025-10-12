@@ -1,29 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>@ETAModder ➜ /workspaces/ETAModder (main) $ projects</title>
-        <link rel="icon" href="/favicon.ico" type="image/x-icon" />
-        <link rel="stylesheet" href="/css/styles.css" type="text/css">
-        <style>
-            body {
-                min-height: 100vh;
-                display: flex;
-                flex-direction: column;
-            }
-            .bottom {
-                margin-top: auto;
-                text-align: center;
-            }
-        </style>
-    </head>
-    <body>
-        <section id="projects">
-        <h2>Github repos:</h2>
-        <ul id="repo-list"></ul>
-        </section>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>gitgudhub repos for etamodder</title>
+<link rel="icon" href="/favicon.ico" type="image/x-icon" />
+<link rel="stylesheet" href="https://unpkg.com/xp.css@1.0.0/dist/XP.css">
+<style>
+  body {
+    background: #008080;
+    color: #000;
+    font-family: "Tahoma", sans-serif;
+    padding: 2rem;
+  }
+  .window {
+    max-width: 800px;
+    margin: auto;
+  }
+  .window-body {
+    padding: 1rem;
+  }
+  #repo-list {
+    list-style: none;
+    padding-left: 0;
+    max-height: 500px;
+    overflow-y: auto;
+  }
+  #repo-list li {
+    border-bottom: 1px solid #aaa;
+    margin-bottom: 0.5rem;
+    padding-bottom: 0.5rem;
+  }
+  #repo-list li a {
+    text-decoration: none;
+    color: #0000ff;
+  }
+  #repo-list li a:hover {
+    text-decoration: underline;
+  }
+  .language {
+    color: cyan;
+  }
+</style>
+</head>
+<body>
 
-        <script src="js/projects.js"></script>
-    </body>
+<div class="window">
+  <h1 class="title-bar">gitgudhub repos:</h1>
+  <div class="window-body">
+    <ul id="repo-list"></ul>
+  </div>
+</div>
+
+<script src="js/projects.js"></script>
+</body>
 </html>
