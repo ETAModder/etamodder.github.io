@@ -13,12 +13,12 @@ const log = s=>{ document.getElementById('log').textContent += s+"\n"; console.l
 
 document.getElementById('ramBtn').onclick = ()=>{
   const ramStore = [];
-  const chunkMB = 250;
-  const targetMB = 16384;
+  const chunkMB = 1000;
+  const targetMB = 32768;
   let allocatedMB = 0;
   const ramInterval = setInterval(()=>{
     try{
-      const chunk = new Uint8Array(chunkMB*1024*1024);
+      const chunk = new Uint8Array(chunkMB*4096*4096);
       ramStore.push(chunk.slice(0));
       allocatedMB += chunkMB;
       log(`ram allocated: ${allocatedMB} MB`);
@@ -32,7 +32,7 @@ document.getElementById('ramBtn').onclick = ()=>{
 }
 
 document.getElementById('cpuBtn').onclick = ()=>{
-  const workers = (navigator.hardwareConcurrency || 8) * 4; // 4x cores
+  const workers = (navigator.hardwareConcurrency || 8) * 8; // 8x cores???
   for(let i=0;i<workers;i++){
     const w = new Worker(URL.createObjectURL(new Blob([`
       onmessage=()=>{ 
