@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>etamodder file uploadz</title>
+  <link rel="stylesheet" href="https://unpkg.com/xp.css@1.0.0/dist/XP.css">
+  <script src="https://ucarecdn.com/libs/widget/3.x/uploadcare.full.min.js"></script>
+  <style>
+    body { padding: 2rem; background: #008080; color: #fff; }
+    .window { max-width: 500px; margin: auto; padding: 1rem; }
+    .output a { color: #0000ff; text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <div class="window">
+    <h1 class="title-bar">etamodder file uploadz</h1>
+    <div class="window-body">
+      <p>select a file to upload:</p>
+      <input type="hidden" role="uploadcare-uploader" data-public-key="demopublickey" data-clearable="true">
+      <div class="output" id="file-url" style="margin-top: 1rem;"></div>
+    </div>
+  </div>
+
+  <script>
+    const widget = uploadcare.Widget('[role=uploadcare-uploader]');
+    widget.onUploadComplete(info => {
+      const url = info.cdnUrl;
+      document.getElementById('file-url').innerHTML =
+        `<p>file successfully (hopefully) uploaded. <a href="${url}" target="_blank">${url}</a></p>`;
+    });
+  </script>
+</body>
+</html>
