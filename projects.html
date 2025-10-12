@@ -7,51 +7,118 @@
 <link rel="icon" href="/favicon.ico" type="image/x-icon" />
 <link rel="stylesheet" href="https://unpkg.com/xp.css">
 <style>
-  body {
-    background: #008080;
-    color: #000;
-    font-family: "Tahoma", sans-serif;
-    padding: 2rem;
-  }
-  .window {
-    max-width: 800px;
-    margin: auto;
-  }
-  .window-body {
-    padding: 1rem;
-  }
-  #repo-list {
-    list-style: none;
-    padding-left: 0;
-    max-height: 500px;
-    overflow-y: auto;
-  }
-  #repo-list li {
-    border-bottom: 1px solid #aaa;
-    margin-bottom: 0.5rem;
-    padding-bottom: 0.5rem;
-  }
-  #repo-list li a {
-    text-decoration: none;
-    color: #0000ff;
-  }
-  #repo-list li a:hover {
-    text-decoration: underline;
-  }
-  .language {
-    color: cyan;
-  }
+body {
+  background: #008080;
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Tahoma", sans-serif;
+}
+.window {
+  width: 600px;
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 2px 2px 6px rgba(0,0,0,0.5);
+}
+.window-body {
+  flex: 1;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: #ece9d8;
+}
+.fun-box {
+  border: 2px groove #ccc;
+  background: white;
+  padding: 10px;
+  flex: 1;
+  overflow: auto;
+}
+.xp-button {
+  background: #e0e0e0;
+  border: 1px solid #808080;
+  padding: 3px 10px;
+  cursor: pointer;
+  font-weight: bold;
+}
+.xp-button:active {
+  background: #c0c0c0;
+  border-top: 1px solid #404040;
+  border-left: 1px solid #404040;
+}
+.status-bar p {
+  margin: 0;
+  padding: 2px 5px;
+  font-size: 12px;
+}
+a {
+  color: #0000ff;
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+.language {
+  color: cyan;
+}
 </style>
 </head>
 <body>
 
 <div class="window">
-  <h1 class="title-bar">gitgudhub repos:</h1>
+  <div class="title-bar">
+    <div class="title-bar-text">gitgudhub repos for etamodder</div>
+    <div class="title-bar-controls">
+      <button aria-label="Minimize"></button>
+      <button aria-label="Maximize"></button>
+      <button aria-label="Close" id="closeBtn"></button>
+    </div>
+  </div>
+
   <div class="window-body">
-    <ul id="repo-list"></ul>
+    <div class="fun-box">
+      <ul id="repo-list"></ul>
+    </div>
+    <div>
+      <button class="xp-button" id="btnRefresh">refresh list</button>
+      <button class="xp-button" id="btnColor">change bg</button>
+    </div>
+  </div>
+
+  <div class="status-bar">
+    <p class="status-bar-field">status: loading repos...</p>
+    <p class="status-bar-field">idk what to put here</p>
   </div>
 </div>
 
 <script src="js/projects.js"></script>
+<script>
+const repoList = document.getElementById("repo-list");
+const btnRefresh = document.getElementById("btnRefresh");
+const btnColor = document.getElementById("btnColor");
+const closeBtn = document.getElementById("closeBtn");
+
+closeBtn.onclick = () => {
+  window.open('https://www.youtube.com/watch?v=dQw4w9WgXcQ','_blank','noopener,noreferrer');
+}
+
+btnColor.onclick = () => {
+  const colors = ["#ece9d8", "#fff", "#d6eaff", "#e8ffd6", "#f8e8ff"];
+  document.querySelector(".window-body").style.background =
+    colors[Math.floor(Math.random() * colors.length)];
+}
+
+btnRefresh.onclick = () => {
+  repoList.innerHTML = '';
+  if(typeof loadRepos === 'function') loadRepos();
+}
+
+// auto-load on page load
+if(typeof loadRepos === 'function') loadRepos();
+</script>
 </body>
 </html>
