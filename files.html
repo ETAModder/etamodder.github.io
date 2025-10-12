@@ -1,33 +1,114 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>etamodder file uploadz</title>
-  <link rel="stylesheet" href="https://unpkg.com/xp.css">
-  <script src="https://ucarecdn.com/libs/widget/3.x/uploadcare.full.min.js"></script>
-  <style>
-    body { padding: 2rem; background: #008080; color: #fff; }
-    .window { max-width: 500px; margin: auto; padding: 1rem; }
-    .output a { color: #0000ff; text-decoration: underline; }
-  </style>
+<meta charset="UTF-8">
+<title>etamodder file uploadz</title>
+<link rel="stylesheet" href="https://unpkg.com/xp.css">
+<script src="https://ucarecdn.com/libs/widget/3.x/uploadcare.full.min.js"></script>
+<style>
+body {
+  background: #008080;
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Tahoma", sans-serif;
+}
+.window {
+  width: 600px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 2px 2px 6px rgba(0,0,0,0.5);
+}
+.window-body {
+  flex: 1;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: #ece9d8;
+}
+.fun-box {
+  border: 2px groove #ccc;
+  background: white;
+  padding: 10px;
+  flex: 1;
+  overflow: auto;
+}
+.xp-button {
+  background: #e0e0e0;
+  border: 1px solid #808080;
+  padding: 3px 10px;
+  cursor: pointer;
+  font-weight: bold;
+}
+.xp-button:active {
+  background: #c0c0c0;
+  border-top: 1px solid #404040;
+  border-left: 1px solid #404040;
+}
+.status-bar p {
+  margin: 0;
+  padding: 2px 5px;
+  font-size: 12px;
+}
+a {
+  color: #0000ff;
+  text-decoration: underline;
+}
+a:hover {
+  text-decoration: underline;
+}
+</style>
 </head>
 <body>
-  <div class="window">
-    <h1 class="title-bar">etamodder file uploadz</h1>
-    <div class="window-body">
+
+<div class="window">
+  <div class="title-bar">
+    <div class="title-bar-text">etamodder file uploadz</div>
+    <div class="title-bar-controls">
+      <button aria-label="Minimize"></button>
+      <button aria-label="Maximize"></button>
+      <button aria-label="Close" id="closeBtn"></button>
+    </div>
+  </div>
+
+  <div class="window-body">
+    <div class="fun-box">
       <p>select a file to upload:</p>
       <input type="hidden" role="uploadcare-uploader" data-public-key="demopublickey" data-clearable="true">
       <div class="output" id="file-url" style="margin-top: 1rem;"></div>
     </div>
+    <div>
+      <button class="xp-button" id="btnClear">clear output</button>
+    </div>
   </div>
 
-  <script>
-    const widget = uploadcare.Widget('[role=uploadcare-uploader]');
-    widget.onUploadComplete(info => {
-      const url = info.cdnUrl;
-      document.getElementById('file-url').innerHTML =
-        `<p>file successfully (hopefully) uploaded. <a href="${url}" target="_blank">${url}</a></p>`;
-    });
-  </script>
+  <div class="status-bar">
+    <p class="status-bar-field">status: ready for things</p>
+    <p class="status-bar-field">xp mode (possibly) enabled</p>
+  </div>
+</div>
+
+<script>
+const widget = uploadcare.Widget('[role=uploadcare-uploader]');
+const fileUrl = document.getElementById('file-url');
+const btnClear = document.getElementById('btnClear');
+const closeBtn = document.getElementById('closeBtn');
+
+widget.onUploadComplete(info => {
+  const url = info.cdnUrl;
+  fileUrl.innerHTML =
+    `<p>file successfully uploaded. <a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a></p>`;
+});
+
+btnClear.onclick = () => { fileUrl.innerHTML = ''; }
+
+closeBtn.onclick = () => {
+  window.open('https://www.youtube.com/watch?v=dQw4w9WgXcQ','_blank','noopener,noreferrer');
+}
+</script>
+
 </body>
 </html>
