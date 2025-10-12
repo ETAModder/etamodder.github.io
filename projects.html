@@ -102,6 +102,13 @@ const btnRefresh = document.getElementById("btnRefresh");
 const btnColor = document.getElementById("btnColor");
 const closeBtn = document.getElementById("closeBtn");
 
+function adjustWindowHeight() {
+  const win = document.querySelector('.window');
+  const funBox = document.querySelector('.fun-box');
+  const totalHeight = funBox.scrollHeight + 100;
+  win.style.height = Math.min(totalHeight + 'px', window.innerHeight * 0.9);
+}
+  
 closeBtn.onclick = () => {
   window.open('https://www.youtube.com/watch?v=dQw4w9WgXcQ','_blank','noopener,noreferrer');
 }
@@ -115,6 +122,7 @@ btnColor.onclick = () => {
 btnRefresh.onclick = () => {
   repoList.innerHTML = '';
   if(typeof loadRepos === 'function') loadRepos();
+  setTimeout(adjustWindowHeight, 100); // small delay for DOM update
 }
 
 // auto-load on page load
