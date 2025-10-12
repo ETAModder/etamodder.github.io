@@ -18,18 +18,20 @@ body {
 }
 .window {
   width: 600px;
-  height: 400px;
+  /* height: 400px; */ /* remove this */
   display: flex;
   flex-direction: column;
   box-shadow: 2px 2px 6px rgba(0,0,0,0.5);
+  max-height: 90vh; /* optional: prevent it from taking full screen */
 }
 .window-body {
-  flex: 1;
+  flex: 1 1 auto;
   padding: 10px;
   display: flex;
   flex-direction: column;
   gap: 10px;
   background: #ece9d8;
+  overflow: auto;
 }
 .fun-box {
   border: 2px groove #ccc;
