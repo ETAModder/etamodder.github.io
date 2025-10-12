@@ -1,36 +1,46 @@
 <!doctype html>
 <html>
 <body>
-<button id="start">start test (ram & cpu go bye bye if this works (which it prolly wont))</button>
-<pre id="log"></pre>
-<script>
-document.getElementById('start').onclick = async () => {
-  const log = (s)=>{ const p=document.getElementById('log'); p.textContent += s+"\n"; console.log(s) };
-  const limitMB = 4096; // set target MB to allocate
-  const chunkMB = 100;
-  const chunk = new Uint8Array(chunkMB * 1024 * 1024);
-  const arr = [];
-  try {
-    while ((performance.memory && performance.memory.usedJSHeapSize/1024/1024 < limitMB) || !performance.memory) {
-      arr.push(chunk.slice(0)); // push copy to keep it retained
-      log('allocated chunks: ' + arr.length + ' (' + (arr.length*chunkMB) + ' MB)');
-      await new Promise(r=>setTimeout(r, 200)); // slow down to avoid freeze
-    }
-  } catch(e) {
-    log('error: ' + e);
-  } finally {
-    log('done or stopped. reload page to free memory.');
-  }
+<h1>cpu&ram "killer"</h1>
 
-  const workers = navigator.hardwareConcurrency || 8;
+<button id="ramBtn">start ram</button>
+<button id="cpuBtn">start cpu</button>
+
+<pre id="log"></pre>
+
+<script>
+const log = s=>{ document.getElementById('log').textContent += s+"\n"; console.log(s); }
+
+document.getElementById('ramBtn').onclick = ()=>{
+  const ramStore = [];
+  const chunkMB = 250; // allocate 50MB per chunk
+  const targetMB = 4096; // stop after ~2GB
+  let allocatedMB = 0;
+  const ramInterval = setInterval(()=>{
+    try{
+      const chunk = new Uint8Array(chunkMB*1024*1024);
+      ramStore.push(chunk.slice(0));
+      allocatedMB += chunkMB;
+      log(`ram allocated: ${allocatedMB} MB`);
+      if(allocatedMB >= targetMB) clearInterval(ramInterval);
+    }catch(e){
+      log("ram allocation error: " + e);
+      clearInterval(ramInterval);
+    }
+  },50);
+  log("ram started");
+}
+
+document.getElementById('cpuBtn').onclick = ()=>{
+  const workers = (navigator.hardwareConcurrency || 4) * 4; // double cores
   for(let i=0;i<workers;i++){
     const w = new Worker(URL.createObjectURL(new Blob([`
-      onmessage=()=>{ while(true){ for(let j=0;j<1e7;j++){ Math.sqrt(j); } } }
+      onmessage=()=>{ while(true){ for(let j=0;j<5e7;j++){ Math.sqrt(j); Math.sin(j); Math.log(j+1); } } }
     `])));
     w.postMessage('go');
   }
-  log(`started ${workers} cpu workers`);
-};
+  log(`started ${workers} cpu workers.`);
+}
 </script>
 </body>
 </html>
