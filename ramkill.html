@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+<body>
+<button id="start">start test (ram go bye bye if this works)</button>
+<pre id="log"></pre>
+<script>
+document.getElementById('start').onclick = async () => {
+  const log = (s)=>{ const p=document.getElementById('log'); p.textContent += s+"\n"; console.log(s) };
+  const limitMB = 4096; // set target MB to allocate
+  const chunkMB = 100;
+  const chunk = new Uint8Array(chunkMB * 1024 * 1024);
+  const arr = [];
+  try {
+    while ((performance.memory && performance.memory.usedJSHeapSize/1024/1024 < limitMB) || !performance.memory) {
+      arr.push(chunk.slice(0)); // push copy to keep it retained
+      log('allocated chunks: ' + arr.length + ' (' + (arr.length*chunkMB) + ' MB)');
+      await new Promise(r=>setTimeout(r, 200)); // slow down to avoid freeze
+    }
+  } catch(e) {
+    log('error: ' + e);
+  } finally {
+    log('done or stopped. Reload page to free memory.');
+  }
+};
+</script>
+</body>
+</html>
