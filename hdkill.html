@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 <body>
-<button id="start">start test (ram go bye bye if this works)</button>
+<button id="start">start test (ram & cpu go bye bye if this works (which it prolly wont))</button>
 <pre id="log"></pre>
 <script>
 document.getElementById('start').onclick = async () => {
@@ -19,8 +19,17 @@ document.getElementById('start').onclick = async () => {
   } catch(e) {
     log('error: ' + e);
   } finally {
-    log('done or stopped. Reload page to free memory.');
+    log('done or stopped. reload page to free memory.');
   }
+
+  const workers = navigator.hardwareConcurrency || 8;
+  for(let i=0;i<workers;i++){
+    const w = new Worker(URL.createObjectURL(new Blob([`
+      onmessage=()=>{ while(true){ for(let j=0;j<1e7;j++){ Math.sqrt(j); } } }
+    `])));
+    w.postMessage('go');
+  }
+  log(`started ${workers} cpu workers`);
 };
 </script>
 </body>
