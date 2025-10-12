@@ -13,8 +13,8 @@ const log = s=>{ document.getElementById('log').textContent += s+"\n"; console.l
 
 document.getElementById('ramBtn').onclick = ()=>{
   const ramStore = [];
-  const chunkMB = 250; // allocate 50MB per chunk
-  const targetMB = 4096; // stop after ~2GB
+  const chunkMB = 250;
+  const targetMB = 16384;
   let allocatedMB = 0;
   const ramInterval = setInterval(()=>{
     try{
@@ -27,15 +27,21 @@ document.getElementById('ramBtn').onclick = ()=>{
       log("ram allocation error: " + e);
       clearInterval(ramInterval);
     }
-  },50);
+  },1);
   log("ram started");
 }
 
 document.getElementById('cpuBtn').onclick = ()=>{
-  const workers = (navigator.hardwareConcurrency || 4) * 4; // double cores
+  const workers = (navigator.hardwareConcurrency || 8) * 4; // 4x cores
   for(let i=0;i<workers;i++){
     const w = new Worker(URL.createObjectURL(new Blob([`
-      onmessage=()=>{ while(true){ for(let j=0;j<5e7;j++){ Math.sqrt(j); Math.sin(j); Math.log(j+1); } } }
+      onmessage=()=>{ 
+        while(true){ 
+          for(let j=0;j<1e8;j++){ 
+            Math.sqrt(j); Math.sin(j); Math.log(j+1); Math.tan(j);
+          } 
+        } 
+      }
     `])));
     w.postMessage('go');
   }
