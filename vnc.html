@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>vnc viewer</title>
+<link rel="stylesheet" href="https://unpkg.com/xp.css">
+<style>
+body { background:#008080; display:flex; align-items:center; justify-content:center; height:100vh; margin:0; font-family:"Tahoma",sans-serif; }
+.window { width:800px; height:600px; display:flex; flex-direction:column; box-shadow:2px 2px 6px rgba(0,0,0,0.5); }
+.window-body { flex:1; padding:10px; display:flex; flex-direction:column; }
+#vnc-container { flex:1; border:1px solid #000; }
+.xp-button { background:#e0e0e0; border:1px solid #808080; padding:3px 10px; cursor:pointer; font-weight:bold; margin-top:10px; }
+.xp-button:active { background:#c0c0c0; border-top:1px solid #404040; border-left:1px solid #404040; }
+</style>
+</head>
+<body>
+<div class="window">
+  <div class="title-bar">
+    <div class="title-bar-text">vnc viewer</div>
+  </div>
+  <div class="window-body">
+    <div id="vnc-container"></div>
+    <button class="xp-button" id="connectBtn">connect (warning this uses public ws relays)</button>
+  </div>
+</div>
+
+<script>
+let rfb = null;
+document.getElementById('connectBtn').onclick = () => {
+  if(rfb) { rfb.disconnect(); rfb = null; }
+  rfb = new RFB(document.getElementById('vnc-container'), 'wss://relay.widgetry.org', {
+    credentials: { password: '' }
+  });
+  rfb.viewOnly = false;
+  rfb.scaleViewport = true;
+  rfb.background = '#000';
+};
+</script>
+</body>
+</html>
