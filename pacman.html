@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>pack man</title>
+<link rel="stylesheet" href="https://unpkg.com/xp.css">
+<style>
+body {
+  background: #008080;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  margin: 0;
+  font-family: "Tahoma", sans-serif;
+}
+.window {
+  width: 450px;
+  height: 500px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 2px 2px 6px rgba(0,0,0,0.5);
+}
+.window-body {
+  flex: 1;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+#pacman {
+  border: 2px solid black;
+}
+.xp-button {
+  background: #e0e0e0;
+  border: 1px solid #808080;
+  padding: 3px 10px;
+  cursor: pointer;
+  font-weight: bold;
+  margin-top: 10px;
+}
+.xp-button:active {
+  background: #c0c0c0;
+  border-top: 1px solid #404040;
+  border-left: 1px solid #404040;
+}
+</style>
+</head>
+<body>
+<div class="window">
+  <div class="title-bar">
+    <div class="title-bar-text">pack man</div>
+    <div class="title-bar-controls">
+      <button aria-label="Minimize"></button>
+      <button aria-label="Maximize"></button>
+      <button aria-label="Close" onclick="window.location.href='index.html'"></button>
+    </div>
+  </div>
+  <div class="window-body">
+    <canvas id="pacman" width="400" height="400"></canvas>
+    <button class="xp-button" onclick="startPacman()">start!!!</button>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/gh/jakesgordon/javascript-pacman@master/pacman.js"></script>
+<script>
+function startPacman() {
+  const canvas = document.getElementById('pacman');
+  const game = new Pacman.Game(canvas);
+  game.start();
+}
+</script>
+</body>
+</html>
