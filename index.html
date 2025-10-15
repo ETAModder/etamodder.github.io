@@ -81,8 +81,8 @@
     </div>
 
     <div class="status-bar">
-      <p class="status-bar-field">status: doing things</p>
-      <p class="status-bar-field">xp mode probably on</p>
+      <p class="status-bar-field">version: <span id="siteVer">...</span></p>
+      <p class="status-bar-field"><a href="https://github.com/ETAModder/etamodder.github.io" target="_blank" rel="noopener noreferrer">star the site on github</a></p>
     </div>
   </div>
 
@@ -91,6 +91,8 @@
     const btnJoke = document.getElementById("btnJoke")
     const btnColor = document.getElementById("btnColor")
     const closeBtn = document.getElementById("closeBtn")
+    const owner = "ETAModder";
+    const repo = "etamodder.github.io";
 
     const messages = [
       "you clicked a thing",
@@ -115,6 +117,25 @@
     closeBtn.onclick = () => {
       window.open('https://www.youtube.com/watch?v=dQw4w9WgXcQ', '_blank', 'noopener,noreferrer');
     }
+
+    document.getElementById("repoName").textContent = `${owner}/${repo}`;
+    
+    fetch(`https://api.github.com/repos/${owner}/${repo}/commits?per_page=1`)
+      .then(response => {
+        const link = response.headers.get("Link");
+        if(link) {
+          const match = link.match(/&page=(\d+)>; rel="last"/);
+          if(match) return match[1];
+        }
+        return response.json().then(data => data.length);
+      })
+      .then(count => {
+        document.getElementById("siteVer").textContent = count;
+      })
+      .catch(err => {
+        console.error(err);
+        document.getElementById("siteVer").textContent = "error";
+      });
   </script>
 </body>
 </html>
