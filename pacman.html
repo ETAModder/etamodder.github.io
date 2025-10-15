@@ -58,7 +58,7 @@ body {
     </div>
   </div>
   <div class="window-body">
-    <canvas id="pacman" width="400" height="400"></canvas>
+    <iframe id="pacman-frame" src="" frameborder="0"></iframe>
     <button class="xp-button" onclick="startPacman()">start!!!</button>
   </div>
 </div>
@@ -66,9 +66,8 @@ body {
 <script src="https://cdn.jsdelivr.net/gh/jakesgordon/javascript-pacman@master/pacman.js"></script>
 <script>
 function startPacman() {
-  const canvas = document.getElementById('pacman');
-  const game = new Pacman.Game(canvas);
-  game.start();
+  const frame = document.getElementById('pacman-frame');
+  frame.src = "https://jsgames777.github.io/pacman-js/";
 }
 </script>
 </body>
