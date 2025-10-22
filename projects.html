@@ -77,7 +77,7 @@ a:hover {
     <div class="title-bar-controls">
       <button aria-label="Minimize"></button>
       <button aria-label="Maximize"></button>
-      <button aria-label="Close" id="closeBtn"></button>
+      <button aria-label="Close" onclick="window.location.href='index.html'"></button>
     </div>
   </div>
 
@@ -102,17 +102,12 @@ a:hover {
 const repoList = document.getElementById("repo-list");
 const btnRefresh = document.getElementById("btnRefresh");
 const btnColor = document.getElementById("btnColor");
-const closeBtn = document.getElementById("closeBtn");
 
 function adjustWindowHeight() {
   const win = document.querySelector('.window');
   const funBox = document.querySelector('.fun-box');
   const totalHeight = funBox.scrollHeight + 100;
   win.style.height = Math.min(totalHeight + 'px', window.innerHeight * 0.9);
-}
-  
-closeBtn.onclick = () => {
-  window.open('https://www.youtube.com/watch?v=dQw4w9WgXcQ','_blank','noopener,noreferrer');
 }
 
 btnColor.onclick = () => {

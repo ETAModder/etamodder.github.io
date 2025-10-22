@@ -1,73 +1,89 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<title>pack man</title>
-<link rel="stylesheet" href="https://unpkg.com/xp.css">
-<style>
-body {
-  background: #008080;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  margin: 0;
-  font-family: "Tahoma", sans-serif;
-}
-.window {
-  width: 450px;
-  height: 500px;
-  display: flex;
-  flex-direction: column;
-  box-shadow: 2px 2px 6px rgba(0,0,0,0.5);
-}
-.window-body {
-  flex: 1;
-  padding: 10px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-#pacman {
-  border: 2px solid black;
-}
-.xp-button {
-  background: #e0e0e0;
-  border: 1px solid #808080;
-  padding: 3px 10px;
-  cursor: pointer;
-  font-weight: bold;
-  margin-top: 10px;
-}
-.xp-button:active {
-  background: #c0c0c0;
-  border-top: 1px solid #404040;
-  border-left: 1px solid #404040;
-}
-</style>
+  <meta charset="UTF-8">
+  <title>pack man</title>
+  <link rel="stylesheet" href="https://unpkg.com/xp.css">
+  <style>
+    body {
+      background: #008080;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      font-family: "Tahoma", sans-serif;
+    }
+
+    .window {
+      display: flex;
+      flex-direction: column;
+      box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.5);
+      max-width: 90vw;
+      max-height: 90vh;
+    }
+
+    .window-body {
+      flex: 1;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #pacman-frame {
+      width: 80vw;
+      height: 60vh;
+      border: 2px solid black;
+      background: #000;
+    }
+
+    .xp-button {
+      background: #e0e0e0;
+      border: 1px solid #808080;
+      padding: 3px 10px;
+      cursor: pointer;
+      font-weight: bold;
+      margin: 10px 0;
+    }
+
+    .xp-button:active {
+      background: #c0c0c0;
+      border-top: 1px solid #404040;
+      border-left: 1px solid #404040;
+    }
+  </style>
 </head>
+
 <body>
-<div class="window">
-  <div class="title-bar">
-    <div class="title-bar-text">pack man</div>
-    <div class="title-bar-controls">
-      <button aria-label="Minimize"></button>
-      <button aria-label="Maximize"></button>
-      <button aria-label="Close" onclick="window.location.href='index.html'"></button>
+  <div class="window">
+    <div class="title-bar">
+      <div class="title-bar-text">pack man (https://freepacman.org is NOT made by me)</div>
+      <div class="title-bar-controls">
+        <button aria-label="Minimize"></button>
+        <button aria-label="Maximize"></button>
+        <button aria-label="Close" onclick="window.location.href='index.html'"></button>
+      </div>
+    </div>
+    <div class="window-body">
+      <iframe id="pacman-frame" src="" frameborder="0"></iframe>
+      <button class="xp-button" onclick="startPacman()">start!!!</button>
     </div>
   </div>
-  <div class="window-body">
-    <iframe id="pacman-frame" src="" frameborder="0"></iframe>
-    <button class="xp-button" onclick="startPacman()">start!!!</button>
-  </div>
-</div>
 
-<script>
-function startPacman() {
-  const frame = document.getElementById('pacman-frame');
-  frame.src = "https://freepacman.org/";
-}
-</script>
+  <script>
+    function startPacman() {
+      const frame = document.getElementById('pacman-frame')
+      frame.src = "https://freepacman.org/"
+    }
+    window.addEventListener('resize', () => {
+      const frame = document.getElementById('pacman-frame')
+      frame.style.width = Math.min(window.innerWidth * 0.8, 900) + 'px'
+      frame.style.height = Math.min(window.innerHeight * 0.6, 700) + 'px'
+    })
+  </script>
 </body>
+
 </html>
