@@ -1,23 +1,71 @@
 <!doctype html>
 <html lang="en">
+
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>epic gamer pog</title>
-<style>
-html,body{height:100%;margin:0}
-body{display:flex;flex-direction:column;align-items:center;justify-content:center;background:#111;color:#fff;font-family:Arial, sans-serif}
-h1{font-size:64px;margin:0 0 20px}
-p{max-width:800px;text-align:center;line-height:1.6}
-#xss-warning{position:fixed;top:0;left:0;right:0;background:black;color:white;padding:5px;font-family:Arial,sans-serif;font-weight:bold;z-index:9999}
-#open-video{position:fixed;bottom:8px;right:8px;background:#222;color:#fff;padding:8px 12px;border-radius:6px;text-decoration:none;z-index:9999}
-</style>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>epic gamer pog</title>
+    <style>
+        html,
+        body {
+            height: 100%;
+            margin: 0
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: #111;
+            color: #fff;
+            font-family: Arial, sans-serif
+        }
+
+        h1 {
+            font-size: 64px;
+            margin: 0 0 20px
+        }
+
+        p {
+            max-width: 800px;
+            text-align: center;
+            line-height: 1.6
+        }
+
+        #xss-warning {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: black;
+            color: white;
+            padding: 5px;
+            font-family: Arial, sans-serif;
+            font-weight: bold;
+            z-index: 9999
+        }
+
+        #open-video {
+            position: fixed;
+            bottom: 8px;
+            right: 8px;
+            background: #222;
+            color: #fff;
+            padding: 8px 12px;
+            border-radius: 6px;
+            text-decoration: none;
+            z-index: 9999
+        }
+    </style>
 </head>
+
 <body>
-<h1>lel xd rekt</h1>
-<p>sus sus sus, imposter imposter imposter, amogus amogus amogus</p>
-<script>
-window.addEventListener('load',()=>{setTimeout(()=>{try{if(!document.getElementById('xss-warning')){const d=document.createElement('div');d.id='xss-warning';d.textContent='this is for educational purposes only';document.body.prepend(d)}console.error('epic rickroll');try{const w=window.open('about:blank','_blank');if(w){w.location='https://www.youtube.com/watch?v=dQw4w9WgXcQ'}else{const a=document.getElementById('open-video')||document.createElement('a');a.id='open-video';a.href='https://www.youtube.com/watch?v=dQw4w9WgXcQ';a.target='_blank';a.textContent='Open video';document.body.appendChild(a)}}catch(e){console.warn('popup failed',e)}let idx=0;const addH1=function(){if(idx>=50) return;document.body.insertAdjacentHTML('beforeend','<h1>u just got rickrolled</h1>');idx++;setTimeout(addH1,40)};addH1();document.body.style.fontFamily='Comic Sans MS';document.body.style.filter='invert(1)';let h=0;setInterval(()=>{try{document.body.style.color='hsl('+h+',100%,50%)';document.body.style.backgroundColor='hsl('+(h+180)%360+',100%,10%)';h=(h+5)%360}catch(e){console.warn(e)}},100);try{const boom=new Audio('https://www.myinstants.com/media/sounds/vine-boom.mp3');boom.muted=true;boom.play().catch(()=>console.warn('audio play blocked'));setInterval(()=>{try{const a=new Audio('https://www.myinstants.com/media/sounds/vine-boom.mp3');a.muted=true;a.play().catch(()=>{});}catch(e){}} ,2000)}catch(e){console.warn('audio error',e)}setInterval(()=>{try{function glitch(text){const chars='@#$%&*abcdefghijklmnopqrstuvwxyz';let arr=text.split('');for(let i=0;i<3;i++){let idx=Math.floor(Math.random()*arr.length);arr[idx]=chars[Math.floor(Math.random()*chars.length)];}return arr.join('')}document.querySelectorAll('h1').forEach(h=>h.textContent=glitch(h.textContent))}catch(e){console.warn(e)}},300);setInterval(()=>{try{const iframe=document.createElement('iframe');iframe.src='https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&mute=1';iframe.allow='autoplay;encrypted-media';iframe.style.position='fixed';iframe.style.width='200px';iframe.style.height='113px';iframe.style.border='none';iframe.style.top=(Math.random()*Math.max(1,window.innerHeight-120))+'px';iframe.style.left=(Math.random()*Math.max(1,window.innerWidth-220))+'px';document.body.appendChild(iframe)}catch(e){console.warn('iframe failed',e)}},1500);document.addEventListener('mousemove',e=>{try{const s=document.createElement('span');s.textContent='💀';s.style.position='fixed';s.style.left=e.clientX+'px';s.style.top=e.clientY+'px';s.style.pointerEvents='none';document.body.appendChild(s);setTimeout(()=>s.remove(),1000)}catch(err){}}); }catch(err){console.error('top-level error',err)}},1000)});
-</script>
+    <h1>lel xd rekt</h1>
+    <p>sus sus sus, imposter imposter imposter, amogus amogus amogus</p>
+    <script>
+        window.addEventListener('load', () => { setTimeout(() => { try { if (!document.getElementById('xss-warning')) { const d = document.createElement('div'); d.id = 'xss-warning'; d.textContent = 'this is for educational purposes only'; document.body.prepend(d) } console.error('epic rickroll'); try { const w = window.open('about:blank', '_blank'); if (w) { w.location = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ' } else { const a = document.getElementById('open-video') || document.createElement('a'); a.id = 'open-video'; a.href = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'; a.target = '_blank'; a.textContent = 'Open video'; document.body.appendChild(a) } } catch (e) { console.warn('popup failed', e) } let idx = 0; const addH1 = function () { if (idx >= 50) return; document.body.insertAdjacentHTML('beforeend', '<h1>u just got rickrolled</h1>'); idx++; setTimeout(addH1, 40) }; addH1(); document.body.style.fontFamily = 'Comic Sans MS'; document.body.style.filter = 'invert(1)'; let h = 0; setInterval(() => { try { document.body.style.color = 'hsl(' + h + ',100%,50%)'; document.body.style.backgroundColor = 'hsl(' + (h + 180) % 360 + ',100%,10%)'; h = (h + 5) % 360 } catch (e) { console.warn(e) } }, 100); try { const boom = new Audio('https://www.myinstants.com/media/sounds/vine-boom.mp3'); boom.muted = true; boom.play().catch(() => console.warn('audio play blocked')); setInterval(() => { try { const a = new Audio('https://www.myinstants.com/media/sounds/vine-boom.mp3'); a.muted = true; a.play().catch(() => { }); } catch (e) { } }, 2000) } catch (e) { console.warn('audio error', e) } setInterval(() => { try { function glitch(text) { const chars = '@#$%&*abcdefghijklmnopqrstuvwxyz'; let arr = text.split(''); for (let i = 0; i < 3; i++) { let idx = Math.floor(Math.random() * arr.length); arr[idx] = chars[Math.floor(Math.random() * chars.length)]; } return arr.join('') } document.querySelectorAll('h1').forEach(h => h.textContent = glitch(h.textContent)) } catch (e) { console.warn(e) } }, 300); setInterval(() => { try { const iframe = document.createElement('iframe'); iframe.src = 'https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&mute=1'; iframe.allow = 'autoplay;encrypted-media'; iframe.style.position = 'fixed'; iframe.style.width = '200px'; iframe.style.height = '113px'; iframe.style.border = 'none'; iframe.style.top = (Math.random() * Math.max(1, window.innerHeight - 120)) + 'px'; iframe.style.left = (Math.random() * Math.max(1, window.innerWidth - 220)) + 'px'; document.body.appendChild(iframe) } catch (e) { console.warn('iframe failed', e) } }, 1500); document.addEventListener('mousemove', e => { try { const s = document.createElement('span'); s.textContent = '💀'; s.style.position = 'fixed'; s.style.left = e.clientX + 'px'; s.style.top = e.clientY + 'px'; s.style.pointerEvents = 'none'; document.body.appendChild(s); setTimeout(() => s.remove(), 1000) } catch (err) { } }); } catch (err) { console.error('top-level error', err) } }, 1000) });
+    </script>
 </body>
+
 </html>

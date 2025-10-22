@@ -1,97 +1,107 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<title>vnc connekter</title>
-<link rel="stylesheet" href="https://unpkg.com/xp.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/novnc-core@1.4.0/core/rfb.css">
-<script src="https://cdn.jsdelivr.net/npm/novnc-core@1.4.0/core/rfb.js"></script>
-<style>
-body {
-  background: #008080;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  margin: 0;
-  font-family: "Tahoma", sans-serif;
-}
-.window {
-  width: 800px;
-  height: 600px;
-  display: flex;
-  flex-direction: column;
-  box-shadow: 2px 2px 6px rgba(0,0,0,0.5);
-}
-.window-body {
-  flex: 1;
-  padding: 10px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-#vnc-container {
-  flex: 1;
-  border: 1px solid #000;
-}
-.xp-button {
-  background: #e0e0e0;
-  border: 1px solid #808080;
-  padding: 3px 10px;
-  cursor: pointer;
-  font-weight: bold;
-}
-.xp-button:active {
-  background: #c0c0c0;
-  border-top: 1px solid #404040;
-  border-left: 1px solid #404040;
-}
-input {
-  padding: 4px 6px;
-  font-size: 14px;
-  width: 100%;
-  box-sizing: border-box;
-}
-label {
-  font-weight: bold;
-}
-</style>
+  <meta charset="UTF-8">
+  <title>vnc connekter</title>
+  <link rel="stylesheet" href="https://unpkg.com/xp.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/novnc-core@1.4.0/core/rfb.css">
+  <script src="https://cdn.jsdelivr.net/npm/novnc-core@1.4.0/core/rfb.js"></script>
+  <style>
+    body {
+      background: #008080;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      font-family: "Tahoma", sans-serif;
+    }
+
+    .window {
+      width: 800px;
+      height: 600px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.5);
+    }
+
+    .window-body {
+      flex: 1;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    #vnc-container {
+      flex: 1;
+      border: 1px solid #000;
+    }
+
+    .xp-button {
+      background: #e0e0e0;
+      border: 1px solid #808080;
+      padding: 3px 10px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .xp-button:active {
+      background: #c0c0c0;
+      border-top: 1px solid #404040;
+      border-left: 1px solid #404040;
+    }
+
+    input {
+      padding: 4px 6px;
+      font-size: 14px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    label {
+      font-weight: bold;
+    }
+  </style>
 </head>
+
 <body>
-<div class="window">
-  <div class="title-bar">
-    <div class="title-bar-text">vnc connekter</div>
-    <div class="title-bar-controls">
-      <button aria-label="Minimize"></button>
-      <button aria-label="Maximize"></button>
-      <button aria-label="Close" onclick="window.location.href='index.html'"></button>
+  <div class="window">
+    <div class="title-bar">
+      <div class="title-bar-text">vnc connekter (prolly broken since its untested)</div>
+      <div class="title-bar-controls">
+        <button aria-label="Minimize"></button>
+        <button aria-label="Maximize"></button>
+        <button aria-label="Close" onclick="window.location.href='index.html'"></button>
+      </div>
+    </div>
+    <div class="window-body">
+      <label for="vncHost">vnc server url:</label>
+      <input type="text" id="vncHost" placeholder="wss://relay.widgetry.org">
+      <label for="vncPassword">passwd (optional):</label>
+      <input type="password" id="vncPassword" placeholder="VNC password">
+      <div id="vnc-container"></div>
+      <button class="xp-button" id="connectBtn">connekt</button>
     </div>
   </div>
-  <div class="window-body">
-    <label for="vncHost">vnc server url:</label>
-    <input type="text" id="vncHost" placeholder="wss://relay.widgetry.org">
-    <label for="vncPassword">passwd (optional):</label>
-    <input type="password" id="vncPassword" placeholder="VNC password">
-    <div id="vnc-container"></div>
-    <button class="xp-button" id="connectBtn">connekt</button>
-  </div>
-</div>
 
-<script>
-let rfb = null;
-document.getElementById('connectBtn').onclick = () => {
-  if (rfb) { rfb.disconnect(); rfb = null; }
+  <script>
+    let rfb = null;
+    document.getElementById('connectBtn').onclick = () => {
+      if (rfb) { rfb.disconnect(); rfb = null; }
 
-  const host = document.getElementById('vncHost').value;
-  const password = document.getElementById('vncPassword').value;
+      const host = document.getElementById('vncHost').value;
+      const password = document.getElementById('vncPassword').value;
 
-  rfb = new RFB(document.getElementById('vnc-container'), host, {
-    credentials: { password: password }
-  });
-  rfb.viewOnly = false;
-  rfb.scaleViewport = true;
-  rfb.background = '#000';
-};
-</script>
+      rfb = new RFB(document.getElementById('vnc-container'), host, {
+        credentials: { password: password }
+      });
+      rfb.viewOnly = false;
+      rfb.scaleViewport = true;
+      rfb.background = '#000';
+    };
+  </script>
 </body>
+
 </html>

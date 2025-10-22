@@ -1,40 +1,41 @@
 <!doctype html>
 <html>
+
 <body>
-<h1>cpu&ram "killer" v3</h1>
+  <h1>cpu&ram "killer" v3</h1>
 
-<button id="ramBtn">start ram</button>
-<button id="cpuBtn">start cpu</button>
+  <button id="ramBtn">start ram</button>
+  <button id="cpuBtn">start cpu</button>
 
-<pre id="log"></pre>
+  <pre id="log"></pre>
 
-<script>
-const log = s=>{ document.getElementById('log').textContent += s+"\n"; console.log(s); }
+  <script>
+    const log = s => { document.getElementById('log').textContent += s + "\n"; console.log(s); }
 
-document.getElementById('ramBtn').onclick = ()=>{
-  const ramStore = [];
-  const chunkMB = 1000;
-  const targetMB = 32768;
-  let allocatedMB = 0;
-  const ramInterval = setInterval(()=>{
-    try{
-      const chunk = new Uint8Array(chunkMB*4096*4096);
-      ramStore.push(chunk.slice(0));
-      allocatedMB += chunkMB;
-      log(`ram allocated: ${allocatedMB} MB`);
-      if(allocatedMB >= targetMB) clearInterval(ramInterval);
-    }catch(e){
-      log("ram allocation error: " + e);
-      clearInterval(ramInterval);
+    document.getElementById('ramBtn').onclick = () => {
+      const ramStore = [];
+      const chunkMB = 1000;
+      const targetMB = 32768;
+      let allocatedMB = 0;
+      const ramInterval = setInterval(() => {
+        try {
+          const chunk = new Uint8Array(chunkMB * 4096 * 4096);
+          ramStore.push(chunk.slice(0));
+          allocatedMB += chunkMB;
+          log(`ram allocated: ${allocatedMB} MB`);
+          if (allocatedMB >= targetMB) clearInterval(ramInterval);
+        } catch (e) {
+          log("ram allocation error: " + e);
+          clearInterval(ramInterval);
+        }
+      }, 1);
+      log("ram started");
     }
-  },1);
-  log("ram started");
-}
 
-document.getElementById('cpuBtn').onclick = ()=>{
-  const workers = (navigator.hardwareConcurrency || 8) * 8; // 8x cores???
-  for(let i=0;i<workers;i++){
-    const w = new Worker(URL.createObjectURL(new Blob([`
+    document.getElementById('cpuBtn').onclick = () => {
+      const workers = (navigator.hardwareConcurrency || 8) * 8; // 8x cores???
+      for (let i = 0; i < workers; i++) {
+        const w = new Worker(URL.createObjectURL(new Blob([`
       onmessage=()=>{ 
         while(true){ 
           for(let j=0;j<1e8;j++){ 
@@ -43,10 +44,11 @@ document.getElementById('cpuBtn').onclick = ()=>{
         } 
       }
     `])));
-    w.postMessage('go');
-  }
-  log(`started ${workers} cpu workers.`);
-}
-</script>
+        w.postMessage('go');
+      }
+      log(`started ${workers} cpu workers.`);
+    }
+  </script>
 </body>
+
 </html>

@@ -1,87 +1,99 @@
 <!doctype html>
 <html>
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>sys/network infos</title>
   <style>
-    body { font-family: monospace; background:#111; color:#0f0; white-space:pre-wrap; padding:10px; }
-    a { color:#0ff; }
+    body {
+      font-family: monospace;
+      background: #111;
+      color: #0f0;
+      white-space: pre-wrap;
+      padding: 10px;
+    }
+
+    a {
+      color: #0ff;
+    }
   </style>
 </head>
+
 <body>
-<pre id="out">collecting...</pre>
-<script>
-async function getLocalIPs() {
-  const ips = new Set()
-  try {
-    const pc = new RTCPeerConnection({iceServers:[{urls:"stun:stun.l.google.com:19302"}]})
-    pc.createDataChannel("d")
-    pc.onicecandidate = e=>{
-      if (e.candidate) {
-        const c = e.candidate.candidate.match(/(\d{1,3}\.){3}\d{1,3}/)
-        if (c) ips.add(c[0])
-      }
+  <pre id="out">collecting...</pre>
+  <script>
+    async function getLocalIPs() {
+      const ips = new Set()
+      try {
+        const pc = new RTCPeerConnection({ iceServers: [{ urls: "stun:stun.l.google.com:19302" }] })
+        pc.createDataChannel("d")
+        pc.onicecandidate = e => {
+          if (e.candidate) {
+            const c = e.candidate.candidate.match(/(\d{1,3}\.){3}\d{1,3}/)
+            if (c) ips.add(c[0])
+          }
+        }
+        const offer = await pc.createOffer()
+        await pc.setLocalDescription(offer)
+        await new Promise(r => setTimeout(r, 500))
+        pc.close()
+      } catch { }
+      return [...ips]
     }
-    const offer = await pc.createOffer()
-    await pc.setLocalDescription(offer)
-    await new Promise(r=>setTimeout(r,500))
-    pc.close()
-  } catch {}
-  return [...ips]
-}
-async function getBattery() {
-  if (!navigator.getBattery) return null
-  try {
-    const b = await navigator.getBattery()
-    return {charging:b.charging,level:b.level,chargingTime:b.chargingTime,dischargingTime:b.dischargingTime}
-  } catch { return null }
-}
-async function getPublicIP() {
-  try { return (await fetch("https://api64.ipify.org?format=json")).json() }
-  catch { return null }
-}
-async function getGeo() {
-  try { return (await fetch("https://ipapi.co/json/")).json() }
-  catch { return null }
-}
-async function getTrace() {
-  try {
-    const t = await fetch("https://www.cloudflare.com/cdn-cgi/trace").then(r=>r.text())
-    return Object.fromEntries(t.trim().split("\n").map(l=>l.split("=")))
-  } catch { return null }
-}
-async function gather() {
-  const data = {}
-  data.timestamp = new Date().toISOString()
-  data.userAgent = navigator.userAgent
-  data.userAgentData = navigator.userAgentData || null
-  data.platform = navigator.platform
-  data.languages = navigator.languages
-  data.cookieEnabled = navigator.cookieEnabled
-  data.online = navigator.onLine
-  data.hardwareConcurrency = navigator.hardwareConcurrency
-  data.deviceMemory = navigator.deviceMemory
-  data.screen = {width:screen.width,height:screen.height,availWidth:screen.availWidth,availHeight:screen.availHeight,colorDepth:screen.colorDepth,pixelDepth:screen.pixelDepth}
-  data.timezone = Intl.DateTimeFormat().resolvedOptions().timeZone
-  data.connection = navigator.connection ? {type:navigator.connection.effectiveType,rtt:navigator.connection.rtt,downlink:navigator.connection.downlink} : null
-  data.plugins = [...navigator.plugins].map(p=>p.name)
-  data.localIPs = await getLocalIPs()
-  data.battery = await getBattery()
-  try {
-    data.mediaDevices = (await navigator.mediaDevices.enumerateDevices()).map(d=>({kind:d.kind,label:d.label||"unknown"}))
-  } catch { data.mediaDevices = [] }
-  data.publicIP = await getPublicIP()
-  data.geo = await getGeo()
-  data.trace = await getTrace()
-  return data
-}
-(async()=>{
-  const out = document.getElementById("out")
-  out.textContent = "collecting..."
-  const info = await gather()
-  out.textContent = JSON.stringify(info,null,2)
-})()
-</script>
+    async function getBattery() {
+      if (!navigator.getBattery) return null
+      try {
+        const b = await navigator.getBattery()
+        return { charging: b.charging, level: b.level, chargingTime: b.chargingTime, dischargingTime: b.dischargingTime }
+      } catch { return null }
+    }
+    async function getPublicIP() {
+      try { return (await fetch("https://api64.ipify.org?format=json")).json() }
+      catch { return null }
+    }
+    async function getGeo() {
+      try { return (await fetch("https://ipapi.co/json/")).json() }
+      catch { return null }
+    }
+    async function getTrace() {
+      try {
+        const t = await fetch("https://www.cloudflare.com/cdn-cgi/trace").then(r => r.text())
+        return Object.fromEntries(t.trim().split("\n").map(l => l.split("=")))
+      } catch { return null }
+    }
+    async function gather() {
+      const data = {}
+      data.timestamp = new Date().toISOString()
+      data.userAgent = navigator.userAgent
+      data.userAgentData = navigator.userAgentData || null
+      data.platform = navigator.platform
+      data.languages = navigator.languages
+      data.cookieEnabled = navigator.cookieEnabled
+      data.online = navigator.onLine
+      data.hardwareConcurrency = navigator.hardwareConcurrency
+      data.deviceMemory = navigator.deviceMemory
+      data.screen = { width: screen.width, height: screen.height, availWidth: screen.availWidth, availHeight: screen.availHeight, colorDepth: screen.colorDepth, pixelDepth: screen.pixelDepth }
+      data.timezone = Intl.DateTimeFormat().resolvedOptions().timeZone
+      data.connection = navigator.connection ? { type: navigator.connection.effectiveType, rtt: navigator.connection.rtt, downlink: navigator.connection.downlink } : null
+      data.plugins = [...navigator.plugins].map(p => p.name)
+      data.localIPs = await getLocalIPs()
+      data.battery = await getBattery()
+      try {
+        data.mediaDevices = (await navigator.mediaDevices.enumerateDevices()).map(d => ({ kind: d.kind, label: d.label || "unknown" }))
+      } catch { data.mediaDevices = [] }
+      data.publicIP = await getPublicIP()
+      data.geo = await getGeo()
+      data.trace = await getTrace()
+      return data
+    }
+    (async () => {
+      const out = document.getElementById("out")
+      out.textContent = "collecting..."
+      const info = await gather()
+      out.textContent = JSON.stringify(info, null, 2)
+    })()
+  </script>
 </body>
+
 </html>
