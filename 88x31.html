@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>how 2 link me on ur site with a 88x31</title>
+  <link rel="stylesheet" href="https://unpkg.com/xp.css" />
+  <style>
+    body {
+      background-image: url('./img/bliss-winxp.jpg');
+      background-size: cover;
+      background-position: center;
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: "Tahoma", sans-serif;
+    }
+
+    textarea {
+      width: 500px;
+      height: 35px;
+      background-color: #272727;
+      color: #ffffff;
+    }
+
+    .window {
+      width: 90vw;
+      max-width: 606px;
+      height: auto;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.5);
+    }
+
+    .window-body {
+      flex: 1;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+      gap: 10px;
+      background: #ece9d8;
+    }
+
+    .fun-box {
+      border: 2px groove #ccc;
+      background: white;
+      padding: 10px;
+      flex: 1;
+      overflow: auto;
+    }
+
+    .xp-button {
+      background: #e0e0e0;
+      border: 1px solid #808080;
+      padding: 3px 10px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .xp-button:active {
+      background: #c0c0c0;
+      border-top: 1px solid #404040;
+      border-left: 1px solid #404040;
+    }
+
+    img {
+      display: inline-block;
+      margin: 0 auto;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="window">
+    <div class="title-bar">
+      <div class="title-bar-text">eta's 88x31 and how 2 link it</div>
+      <div class="title-bar-controls">
+        <button aria-label="Minimize"></button>
+        <button aria-label="Maximize"></button>
+        <button aria-label="Close" onclick="window.location.href = 'index.html'"></button>
+      </div>
+    </div>
+
+    <div class="window-body">
+      <div class="fun-box">
+        <b>i have made an official 88x31!!!!</b><br><br>
+        this is the 88x31 in all of it's unglorious glory.<br>
+        it aint the best but it works lmao (and its winxp)<br><br>
+        <img src="88x31s/website-88x31.gif" alt="eta's site 88x31" height="31" width="88"><br><br>
+
+        <b>how 2 put it on ur site</b><br>
+        use this snippet (or smth similar) on your site:<br>
+        <textarea readonly>&lt;a href="https://etamodder.github.io" target="_blank" rel="noopener noreferrer"&gt;&lt;img src="https://etamodder.github.io/88x31s/website-88x31.gif" alt="eta's site" width="88" height="31"&gt;&lt;/a&gt;</textarea><br>
+        <button class="xp-button" id="copyBtn">copy code</button>
+        <hr>
+        <b>downloads</b><br>
+        <button class="xp-button" onclick="downloadBadge()">download da gif</button>
+        <hr>
+        <b>pro tiperoos</b><br>
+        - make sure the 88x31 isnt way too small or big<br>
+        - make sure to include the redirect not just the img<br>
+        - tampering with the image is not recommended either<br>
+        - you can also download and host ur own img of the badge<br>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('copyBtn').onclick = () => {
+      const code = document.querySelector('textarea').value;
+      navigator.clipboard.writeText(code);
+      alert('code copied!');
+    };
+
+    function downloadBadge() {
+      const link = document.createElement('a');
+      link.href = '88x31s/website-88x31.gif';
+      link.download = 'eta-badge.gif';
+      link.click();
+    }
+  </script>
+</body>
+
+</html>
