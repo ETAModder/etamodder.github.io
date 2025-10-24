@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>eta's blorgs</title>
+    <title>ETA Blogs</title>
     <link rel="stylesheet" href="https://unpkg.com/xp.css" />
     <style>
         body {
@@ -12,126 +12,177 @@
             background-position: center;
             font-family: "Tahoma", sans-serif;
             margin: 0;
+            padding: 20px;
             display: flex;
             justify-content: center;
-            padding: 20px;
+            gap: 10px;
+            height: 100vh;
+            box-sizing: border-box;
+        }
+
+        .blog-container {
+            display: flex;
+            gap: 10px;
+            width: 95vw;
+            max-width: 1000px;
+            height: 80vh;
         }
 
         .window {
-            width: 90vw;
-            max-width: 700px;
             display: flex;
             flex-direction: column;
-            box-shadow: 2px 2px 6px rgba(0,0,0,0.5);
+            box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.5);
+            background: #ece9d8;
         }
 
         .window-body {
-            padding: 10px;
-            background: #ece9d8;
+            flex: 1;
+            overflow-y: auto;
+            padding: 8px;
             display: flex;
             flex-direction: column;
-            gap: 20px;
-            max-height: 80vh;
-            overflow-y: auto;
+            gap: 10px;
         }
-        
-        .blog-card {
-            border: 2px groove #ccc;
-            background: white;
-            padding: 10px;
+
+        .sidebar {
+            width: 200px;
+        }
+
+        .sidebar button {
+            width: 100%;
+            margin-bottom: 5px;
+            text-align: left;
+            cursor: pointer;
+            font-weight: bold;
+            background: #e0e0e0;
+            border: 1px solid #808080;
+            padding: 3px 6px;
+        }
+
+        .sidebar button:active {
+            background: #c0c0c0;
+            border-top: 1px solid #404040;
+            border-left: 1px solid #404040;
         }
 
         .blog-title {
             font-weight: bold;
             font-size: 18px;
-            margin-bottom: 4px;
+            margin-bottom: 5px;
         }
 
         .blog-meta {
             font-size: 12px;
-            color: #555;
-            margin-bottom: 6px;
+            color: #333;
+            margin-bottom: 10px;
         }
 
-        .xp-button {
-            background: #e0e0e0;
-            border: 1px solid #808080;
-            padding: 4px 10px;
-            cursor: pointer;
-            font-weight: bold;
-            margin-top: 6px;
+        .blog-caption {
+            font-style: italic;
+            margin-bottom: 10px;
         }
 
-        .xp-button:active {
-            background: #c0c0c0;
-            border-top: 1px solid #404040;
-            border-left: 1px solid #404040;
+        .blog-content {
+            line-height: 1.5;
         }
     </style>
 </head>
 
 <body>
-    <div class="window">
-        <div class="title-bar">
-            <div class="title-bar-text">eta's blorgs</div>
-            <div class="title-bar-controls">
-                <button aria-label="Minimize"></button>
-                <button aria-label="Maximize"></button>
-                <button aria-label="Close" onclick="window.location.href='index.html'"></button>
+
+    <div class="blog-container">
+        <!-- sidebar -->
+        <div class="window sidebar">
+            <div class="title-bar">
+                <div class="title-bar-text">Blog Titles</div>
+                <div class="title-bar-controls">
+                    <button aria-label="Minimize"></button>
+                    <button aria-label="Maximize"></button>
+                    <button aria-label="Close"></button>
+                </div>
+            </div>
+            <div class="window-body" id="blog-list">
+                loading...
             </div>
         </div>
 
-        <div class="window-body" id="blogs-container">
-            <p>loading da blogz</p>
+        <!-- main -->
+        <div class="window main-window" style="flex:1">
+            <div class="title-bar">
+                <div class="title-bar-text">Blog Viewer</div>
+                <div class="title-bar-controls">
+                    <button aria-label="Minimize"></button>
+                    <button aria-label="Maximize"></button>
+                    <button aria-label="Close"></button>
+                </div>
+            </div>
+            <div class="window-body" id="blog-display">
+                loading...
+            </div>
         </div>
     </div>
+
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script>
         const owner = "ETAModder";
         const repo = "etamodder.github.io";
         const folder = "blogs";
 
-        async function loadBlogs() {
-            const container = document.getElementById('blogs-container');
-            container.innerHTML = '';
+        let blogs = [];
 
-            // git gub api
+        async function loadBlogs() {
+            const listContainer = document.getElementById('blog-list');
+            const displayContainer = document.getElementById('blog-display');
+            listContainer.innerHTML = '';
+            displayContainer.innerHTML = '';
+
             const res = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${folder}`);
             const files = await res.json();
-
             const mdFiles = files.filter(f => f.name.endsWith('.md'));
 
             for (const file of mdFiles) {
                 try {
                     const rawRes = await fetch(file.download_url);
                     const text = await rawRes.text();
-
                     const match = text.match(/---\s*([\s\S]*?)\s*---\s*([\s\S]*)/);
                     if (!match) continue;
-
                     const frontmatter = match[1];
                     const content = match[2];
                     const metadata = Object.fromEntries(
                         frontmatter.split('\n').map(line => line.split(':').map(s => s.trim()))
                     );
-
-                    const blogDiv = document.createElement('div');
-                    blogDiv.className = 'blog-card';
-                    blogDiv.innerHTML = `
-                        <div class="blog-title">${metadata.title}</div>
-                        <div class="blog-meta">by ${metadata.author} - ${metadata.date}</div>
-                        <div class="blog-caption"><i>${metadata.caption}</i></div>
-                        <div class="blog-content">${marked.parse(content)}</div>
-                    `;
-                    container.appendChild(blogDiv);
+                    blogs.push({ metadata, content });
                 } catch (e) {
-                    console.error('failed to load:', file.name, e);
+                    console.error('failed to load blog:', file.name, e);
                 }
             }
+
+            blogs.sort((a, b) => new Date(b.metadata.date) - new Date(a.metadata.date));
+
+            blogs.forEach((blog, index) => {
+                const btn = document.createElement('button');
+                btn.textContent = blog.metadata.title;
+                btn.onclick = () => displayBlog(index);
+                listContainer.appendChild(btn);
+            });
+
+            if (blogs.length) displayBlog(0);
+        }
+
+        function displayBlog(index) {
+            const displayContainer = document.getElementById('blog-display');
+            const blog = blogs[index];
+            displayContainer.innerHTML = `
+    <div class="blog-title">${blog.metadata.title}</div>
+    <div class="blog-meta">by ${blog.metadata.author} - ${blog.metadata.date}</div>
+    <div class="blog-caption"><i>${blog.metadata.caption}</i></div>
+    <div class="blog-content">${marked.parse(blog.content)}</div>
+  `;
         }
 
         loadBlogs();
     </script>
+
 </body>
 
 </html>
