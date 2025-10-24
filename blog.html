@@ -22,19 +22,19 @@
             max-width: 700px;
             display: flex;
             flex-direction: column;
-            box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.5);
+            box-shadow: 2px 2px 6px rgba(0,0,0,0.5);
         }
 
         .window-body {
-            background: #ece9d8;
             padding: 10px;
+            background: #ece9d8;
             display: flex;
             flex-direction: column;
-            gap: 10px;
-            max-height: 90vh;
+            gap: 20px;
+            max-height: 80vh;
             overflow-y: auto;
         }
-
+        
         .blog-card {
             border: 2px groove #ccc;
             background: white;
@@ -119,8 +119,8 @@
                     blogDiv.className = 'blog-card';
                     blogDiv.innerHTML = `
                         <div class="blog-title">${metadata.title}</div>
-                        <div class="blog-meta">by ${metadata.author} — ${metadata.date}</div>
-                        <div class="blog-caption">${metadata.caption}</div>
+                        <div class="blog-meta">by ${metadata.author} - ${metadata.date}</div>
+                        <div class="blog-caption"><i>${metadata.caption}</i></div>
                         <div class="blog-content">${marked.parse(content)}</div>
                     `;
                     container.appendChild(blogDiv);
