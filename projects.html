@@ -1,129 +1,142 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>gitgudhub repos for etamodder</title>
-<link rel="icon" href="/favicon.ico" type="image/x-icon" />
-<link rel="stylesheet" href="https://unpkg.com/xp.css">
-<style>
-body {
-  background: #008080;
-  margin: 0;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: "Tahoma", sans-serif;
-}
-.window {
-  width: 600px;
-  /* height: 400px; */ /* remove this */
-  display: flex;
-  flex-direction: column;
-  box-shadow: 2px 2px 6px rgba(0,0,0,0.5);
-  max-height: 90vh; /* optional: prevent it from taking full screen */
-}
-.window-body {
-  flex: 1 1 auto;
-  padding: 10px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  background: #ece9d8;
-  overflow: auto;
-}
-.fun-box {
-  border: 2px groove #ccc;
-  background: white;
-  padding: 10px;
-  flex: 1;
-  overflow: auto;
-}
-.xp-button {
-  background: #e0e0e0;
-  border: 1px solid #808080;
-  padding: 3px 10px;
-  cursor: pointer;
-  font-weight: bold;
-}
-.xp-button:active {
-  background: #c0c0c0;
-  border-top: 1px solid #404040;
-  border-left: 1px solid #404040;
-}
-.status-bar p {
-  margin: 0;
-  padding: 2px 5px;
-  font-size: 12px;
-}
-a {
-  color: #0000ff;
-  text-decoration: none;
-}
-a:hover {
-  text-decoration: underline;
-}
-.language {
-  color: cyan;
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>gitgudhub repos for etamodder</title>
+    <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="https://unpkg.com/xp.css">
+    <style>
+        body {
+            background-image: url('./img/bliss-winxp.jpg');
+            background-size: cover;
+            background-position: center;
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: "Tahoma", sans-serif;
+        }
+
+        .window {
+            width: 600px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.5);
+            max-height: 90vh;
+        }
+
+        .window-body {
+            flex: 1 1 auto;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            background: #ece9d8;
+            overflow: auto;
+        }
+
+        .fun-box {
+            border: 2px groove #ccc;
+            background: white;
+            padding: 10px;
+            flex: 1;
+            overflow: auto;
+        }
+
+        .xp-button {
+            background: #e0e0e0;
+            border: 1px solid #808080;
+            padding: 3px 10px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .xp-button:active {
+            background: #c0c0c0;
+            border-top: 1px solid #404040;
+            border-left: 1px solid #404040;
+        }
+
+        .status-bar p {
+            margin: 0;
+            padding: 2px 5px;
+            font-size: 12px;
+        }
+
+        a {
+            color: #0000ff;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .language {
+            color: cyan;
+        }
+    </style>
 </head>
+
 <body>
 
-<div class="window">
-  <div class="title-bar">
-    <div class="title-bar-text">gitgudhub repos for etamodder</div>
-    <div class="title-bar-controls">
-      <button aria-label="Minimize"></button>
-      <button aria-label="Maximize"></button>
-      <button aria-label="Close" onclick="window.location.href='index.html'"></button>
+    <div class="window">
+        <div class="title-bar">
+            <div class="title-bar-text">gitgudhub repos for etamodder</div>
+            <div class="title-bar-controls">
+                <button aria-label="Minimize"></button>
+                <button aria-label="Maximize"></button>
+                <button aria-label="Close" onclick="window.location.href='index.html'"></button>
+            </div>
+        </div>
+
+        <div class="window-body">
+            <div class="fun-box">
+                <ul id="repo-list"></ul>
+            </div>
+            <div>
+                <button class="xp-button" id="btnRefresh">refresh list</button>
+                <button class="xp-button" id="btnColor">change bg</button>
+            </div>
+        </div>
+
+        <div class="status-bar">
+            <p class="status-bar-field">status: loading repos...</p>
+            <p class="status-bar-field">idk what to put here</p>
+        </div>
     </div>
-  </div>
 
-  <div class="window-body">
-    <div class="fun-box">
-      <ul id="repo-list"></ul>
-    </div>
-    <div>
-      <button class="xp-button" id="btnRefresh">refresh list</button>
-      <button class="xp-button" id="btnColor">change bg</button>
-    </div>
-  </div>
+    <script src="js/projects.js"></script>
+    <script>
+        const repoList = document.getElementById("repo-list");
+        const btnRefresh = document.getElementById("btnRefresh");
+        const btnColor = document.getElementById("btnColor");
 
-  <div class="status-bar">
-    <p class="status-bar-field">status: loading repos...</p>
-    <p class="status-bar-field">idk what to put here</p>
-  </div>
-</div>
+        function adjustWindowHeight() {
+            const win = document.querySelector('.window');
+            const funBox = document.querySelector('.fun-box');
+            const totalHeight = funBox.scrollHeight + 100;
+            win.style.height = Math.min(totalHeight + 'px', window.innerHeight * 0.9);
+        }
 
-<script src="js/projects.js"></script>
-<script>
-const repoList = document.getElementById("repo-list");
-const btnRefresh = document.getElementById("btnRefresh");
-const btnColor = document.getElementById("btnColor");
+        btnColor.onclick = () => {
+            const colors = ["#ece9d8", "#fff", "#d6eaff", "#e8ffd6", "#f8e8ff"];
+            document.querySelector(".window-body").style.background =
+                colors[Math.floor(Math.random() * colors.length)];
+        }
 
-function adjustWindowHeight() {
-  const win = document.querySelector('.window');
-  const funBox = document.querySelector('.fun-box');
-  const totalHeight = funBox.scrollHeight + 100;
-  win.style.height = Math.min(totalHeight + 'px', window.innerHeight * 0.9);
-}
+        btnRefresh.onclick = () => {
+            repoList.innerHTML = '';
+            if (typeof loadRepos === 'function') loadRepos();
+            setTimeout(adjustWindowHeight, 100); // small delay for DOM update
+        }
 
-btnColor.onclick = () => {
-  const colors = ["#ece9d8", "#fff", "#d6eaff", "#e8ffd6", "#f8e8ff"];
-  document.querySelector(".window-body").style.background =
-    colors[Math.floor(Math.random() * colors.length)];
-}
-
-btnRefresh.onclick = () => {
-  repoList.innerHTML = '';
-  if(typeof loadRepos === 'function') loadRepos();
-  setTimeout(adjustWindowHeight, 100); // small delay for DOM update
-}
-
-// auto-load on page load
-if(typeof loadRepos === 'function') loadRepos();
-</script>
+        // auto-load on page load
+        if (typeof loadRepos === 'function') loadRepos();
+    </script>
 </body>
+
 </html>
