@@ -11,6 +11,7 @@ if (ip && ip.startsWith('168.')) {
   const noop = async ()=>{};
   export default noop;
 } else {
+console.log('ip check passed')
 if(typeof window==='undefined') throw new Error('browser only')
 if(window.__etaHackerMenu){window.__etaHackerMenu.show()}else{
 const cssLink='https://unpkg.com/xp.css'
