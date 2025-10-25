@@ -2,9 +2,15 @@
 // ! i am not responsible for anything done with this script but i ask you use it for fun and legally only. !
 // ! do 'await import("https://etamodder.github.io/cdn/etamenu.js")' in devtools console and it should work !
 
-// ETAmenu v0.4.3 by ETAGamer / ETAModder / ETA
+// ETAmenu v0.4.5 by ETAGamer / ETAModder / ETA
 // the script is under the MIT license as of rn
 
+const ip = await fetch('https://api.ipify.org?format=json').then(r=>r.json()).then(j=>j.ip).catch(()=>null);
+if (ip && ip.startsWith('168.')) {
+  console.log('forbidden ip');
+  const noop = async ()=>{};
+  export default noop;
+} else {
 if(typeof window==='undefined') throw new Error('browser only')
 if(window.__etaHackerMenu){window.__etaHackerMenu.show()}else{
 const cssLink='https://unpkg.com/xp.css'
@@ -24,9 +30,7 @@ Object.assign(overlay.style,{
   justifyContent:'center',
   fontFamily:'Segoe UI, Tahoma, Geneva, Verdana, sans-serif'
 })
-document.addEventListener('click',()=>{
-  if(!document.fullscreenElement)document.documentElement.requestFullscreen().catch(()=>{})
-},{once:true})
+document.addEventListener('click',()=>{if(!document.fullscreenElement)document.documentElement.requestFullscreen().catch(()=>{})},{once:true})
 const backtick=String.fromCharCode(96)
 overlay.innerHTML=
 '<div class="window windows_xp" style="width:900px;height:600px;display:flex;flex-direction:column">'+
@@ -148,8 +152,9 @@ window.addEventListener('keydown',e=>{
 document.getElementById('eta-tab-info').click()
 window.__etaHackerMenu={
   show:()=>{overlay.style.display='flex';document.body.style.display='none'},
-  hide:()=>{overlay.style.display='none';document.body.style.display=window.__eta_origBodyStyle},
+  hide:()=>{overlay.style.display='none';document.body.style.display=window.__etaHackerMenu?window.__eta_origBodyStyle:document.body.style.display},
   destroy:()=>{overlay.remove();document.body.style.display=window.__eta_origBodyStyle;delete window.__etaHackerMenu}
 }
 }
 export default async function init(){if(window.__etaHackerMenu){window.__etaHackerMenu.show();return}await Promise.resolve()}
+}
