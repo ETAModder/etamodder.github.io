@@ -64,6 +64,8 @@
             margin: auto;
         }
     </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clippy.js/1.0.0/clippy.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/clippy.js/1.0.0/clippy.min.css" />
 </head>
 
 <body>
@@ -172,6 +174,30 @@
             "javascript is fun"
         ]
 
+        const clippymsgs = [
+            "It seems you are having a problem.\nYou haven't starred the repo yet!",
+            "Have you read the blog yet?",
+            "Don't tell BonziBuddy about what I said.",
+            "Sometimes I pop up for no reason.\nLike now!",
+            "Would you like to create a mail merge for your grocery items?\nI can help you send personalized letters to each banana!"
+        ];
+
+        const animations = [
+            "GestureUp",
+            "GestureDown",
+            "GetAttention",
+            "Idle",
+            "Writing",
+            "Thinking",
+            "LookingLeft",
+            "LookingRight",
+            "Searching"
+        ];
+
+        function randomItem(arr) {
+            return arr[Math.floor(Math.random() * arr.length)];
+        }
+
         btnJoke.onclick = () => {
             output.innerHTML += "<br>" + messages[Math.floor(Math.random() * messages.length)]
             output.scrollTop = output.scrollHeight
@@ -186,6 +212,45 @@
         closeBtn.onclick = () => {
             window.open('https://www.youtube.com/watch?v=dQw4w9WgXcQ', '_blank', 'noopener,noreferrer');
         }
+
+        window.addEventListener("load", () => {
+            clippy.load('Clippy', agent => {
+                agent.show();
+                agent._el.style.zIndex = 9999;
+
+                const clippymsgs = [
+                    "It seems you are having a problem.\nYou haven't starred the repo yet!",
+                    "Have you read the blog yet?",
+                    "Don't tell BonziBuddy about what I said.",
+                    "Sometimes I pop up for no reason.\nLike now!",
+                    "Would you like to create a mail merge for your grocery items?\nI can help you send personalized letters to each banana!"
+                ];
+
+                const animations = [
+                    "GestureUp",
+                    "GestureDown",
+                    "GetAttention",
+                    "Idle",
+                    "Writing",
+                    "Thinking",
+                    "LookingLeft",
+                    "LookingRight",
+                    "Searching"
+                ];
+
+                function randomItem(arr) {
+                    return arr[Math.floor(Math.random() * arr.length)];
+                }
+
+                function greet() {
+                    agent.play(randomItem(animations));
+                    agent.speak(randomItem(clippymsgs));
+                }
+
+                greet();
+                setInterval(greet, 60_000);
+            }, 'https://cdnjs.cloudflare.com/ajax/libs/clippy.js/1.0.0/agents/');
+        });
     </script>
 </body>
 
