@@ -64,8 +64,7 @@
             margin: auto;
         }
     </style>
-    <script src="clippyjs/lib/index.js"></script>
-    <link rel="stylesheet" href="clippyjs/assets/clippy.css" />
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/clippyjs@0.0.3/assets/clippy.css" media="all">
 </head>
 
 <body>
@@ -149,74 +148,25 @@
 
         <div class="status-bar">
             <p class="status-bar-field">
-                <!-- hitwebcounter Code START -->
-                <a href="https://www.hitwebcounter.com/" target="_blank">
-                    <img src="https://hitwebcounter.com/counter/counter.php?page=21452343&style=0001&nbdigits=6&type=page&initCount=0"
-                        title="Counters" Alt="Counters" border="0" /></a>
+                <a href="https://www.websiteout.net/counter.php" target="_blank" rel="noopener noreferrer">hit
+                    counter:</a>&emsp;<a href="https://www.websiteout.net/counter.php" target="_blank"
+                    rel="noopener noreferrer"></a>
+                <script type="text/javascript" src="https://counter.websiteout.com/js/33/12/0/0"></script></a>
             </p>
             <p class="status-bar-field"><a href="https://github.com/ETAModder/etamodder.github.io" target="_blank"
                     rel="noopener noreferrer">star the site on github</a></p>
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/clippyjs@latest/clippy.min.js"></script>
     <script>
-        const output = document.getElementById("output")
-        const btnJoke = document.getElementById("btnJoke")
-        const btnColor = document.getElementById("btnColor")
-        const closeBtn = document.getElementById("closeBtn")
-
-        const messages = [
-            "you clicked a thing",
-            "peak xp.css action",
-            "this is a message",
-            "keep clicking",
-            "more fun messages",
-            "javascript is fun"
-        ]
-
-        const clippymsgs = [
-            "It seems you are having a problem.\nYou haven't starred the repo yet!",
-            "Have you read the blog yet?",
-            "Don't tell BonziBuddy about what I said.",
-            "Sometimes I pop up for no reason.\nLike now!",
-            "Would you like to create a mail merge for your grocery items?\nI can help you send personalized letters to each banana!"
-        ];
-
-        const animations = [
-            "GestureUp",
-            "GestureDown",
-            "GetAttention",
-            "Idle",
-            "Writing",
-            "Thinking",
-            "LookingLeft",
-            "LookingRight",
-            "Searching"
-        ];
-
-        function randomItem(arr) {
-            return arr[Math.floor(Math.random() * arr.length)];
-        }
-
-        btnJoke.onclick = () => {
-            output.innerHTML += "<br>" + messages[Math.floor(Math.random() * messages.length)]
-            output.scrollTop = output.scrollHeight
-        }
-
-        btnColor.onclick = () => {
-            const colors = ["#ece9d8", "#fff", "#d6eaff", "#e8ffd6", "#f8e8ff"]
-            document.querySelector(".window-body").style.background =
-                colors[Math.floor(Math.random() * colors.length)]
-        }
-
-        closeBtn.onclick = () => {
-            window.open('https://www.youtube.com/watch?v=dQw4w9WgXcQ', '_blank', 'noopener,noreferrer');
-        }
-
         window.addEventListener("load", () => {
             clippy.load('Clippy', agent => {
                 agent.show();
                 agent._el.style.zIndex = 9999;
+
+                function randomItem(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
 
                 const clippymsgs = [
                     "It seems you are having a problem.\nYou haven't starred the repo yet!",
@@ -227,20 +177,9 @@
                 ];
 
                 const animations = [
-                    "GestureUp",
-                    "GestureDown",
-                    "GetAttention",
-                    "Idle",
-                    "Writing",
-                    "Thinking",
-                    "LookingLeft",
-                    "LookingRight",
-                    "Searching"
+                    "GestureUp", "GestureDown", "GetAttention", "Idle",
+                    "Writing", "Thinking", "LookingLeft", "LookingRight", "Searching"
                 ];
-
-                function randomItem(arr) {
-                    return arr[Math.floor(Math.random() * arr.length)];
-                }
 
                 function greet() {
                     agent.play(randomItem(animations));
@@ -249,7 +188,7 @@
 
                 greet();
                 setInterval(greet, 60_000);
-            }, 'clippyjs/assets/agents/');
+            }, 'https://unpkg.com/clippyjs@0.0.3/build/agents/');
         });
     </script>
 </body>
