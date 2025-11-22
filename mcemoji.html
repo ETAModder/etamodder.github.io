@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>letters 2 bedrock emojis converter</title>
+<style>
+body { font-family: sans-serif; padding: 20px; }
+textarea { width: 100%; height: 120px; font-size: 16px; }
+.output { margin-top: 15px; padding: 10px; background: #eee; font-size: 28px; white-space: pre-wrap; }
+</style>
+</head>
+<body>
+
+<h2>convert lowercase letters to bedrock edition emojis</h2>
+
+<textarea id="inp" placeholder="type..."></textarea>
+<div id="out" class="output"></div>
+
+<script>
+const map = {
+a:"\uE100",
+b:"\uE101",
+c:"\uE102",
+d:"\uE103",
+e:"\uE0A0",
+f:"\uE0A1",
+g:"\uE104",
+h:"\uE080",
+i:"\uE081",
+j:"\uE082",
+k:"\uE083",
+l:"\uE084",
+m:"\uE085",
+n:"\uE086",
+o:"\uE087",
+p:"\uE000",
+q:"\uE001",
+r:"\uE002",
+s:"\uE003",
+t:"\uE004",
+u:"\uE005",
+v:"\uE006",
+w:"\uE007",
+x:"\uE008",
+y:"\uE009",
+z:"\uE00A"
+};
+
+function convert(t) {
+t = t.toLowerCase();
+let out = "";
+for (let c of t) out += map[c] || c;
+return out;
+}
+
+document.getElementById("inp").addEventListener("input", () => {
+document.getElementById("out").textContent = convert(document.getElementById("inp").value);
+});
+</script>
+
+</body>
+</html>
