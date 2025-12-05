@@ -8,8 +8,6 @@
 const ip = await fetch('https://api.ipify.org?format=json').then(r=>r.json()).then(j=>j.ip).catch(()=>null);
 if (ip && ip.startsWith('168.')) {
   console.log('forbidden ip');
-  const noop = async ()=>{};
-  export default noop;
 } else {
 console.log('ip check passed')
 if(typeof window==='undefined') throw new Error('browser only')
@@ -157,5 +155,4 @@ window.__etaHackerMenu={
   destroy:()=>{overlay.remove();document.body.style.display=window.__eta_origBodyStyle;delete window.__etaHackerMenu}
 }
 }
-export default async function init(){if(window.__etaHackerMenu){window.__etaHackerMenu.show();return}await Promise.resolve()}
 }
