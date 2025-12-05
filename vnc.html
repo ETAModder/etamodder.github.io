@@ -6,7 +6,6 @@
     <title>vnc connekter</title>
     <link rel="stylesheet" href="https://unpkg.com/xp.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/novnc-core@1.4.0/core/rfb.css">
-    <script src="https://cdn.jsdelivr.net/npm/novnc-core@1.4.0/core/rfb.js"></script>
     <style>
         body {
             background-image: url('./img/bliss-winxp.jpg');
@@ -87,8 +86,10 @@
             <button class="xp-button" id="connectBtn">connekt (likely doesnt work)</button>
         </div>
     </div>
-
+    
     <script>
+        import RFB from 'https://cdn.jsdelivr.net/npm/@novnc/novnc@1.4.0/core/rfb.js';
+        
         let rfb = null;
         document.getElementById('connectBtn').onclick = () => {
             if (rfb) { rfb.disconnect(); rfb = null; }
