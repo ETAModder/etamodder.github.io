@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Enneabot Selfbot Commands</title>
+    <link rel="stylesheet" href="https://unpkg.com/xp.css" />
+    <style>
+        body {
+            background-image: url('./img/bliss-winxp.jpg');
+            background-size: cover;
+            background-position: center;
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: "Tahoma", sans-serif;
+        }
+
+        .window {
+            width: 90vw;
+            max-width: 606px;
+            height: auto;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.5);
+        }
+
+        .window-body {
+            flex: 1;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            gap: 10px;
+            background: #ece9d8;
+        }
+
+        .fun-box {
+            border: 2px groove #ccc;
+            background: white;
+            padding: 10px;
+            flex: 1;
+            overflow: auto;
+        }
+
+        .xp-button {
+            background: #e0e0e0;
+            border: 1px solid #808080;
+            padding: 3px 10px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .xp-button:active {
+            background: #c0c0c0;
+            border-top: 1px solid #404040;
+            border-left: 1px solid #404040;
+        }
+
+        img {
+            display: inline-block;
+            margin: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="window">
+        <div class="title-bar">
+            <div class="title-bar-text">enneabothelp.exe</div>
+            <div class="title-bar-controls">
+                <button aria-label="Minimize"></button>
+                <button aria-label="Maximize"></button>
+                <button aria-label="Close" id="closeBtn"></button>
+            </div>
+        </div>
+
+        <div class="window-body">
+            <div class="fun-box" id="output">
+                  <ul>
+                    <li><strong>ping</strong>: my ping is: {ping}</li>
+                    <li><strong>tps</strong>: server tps: {server.tps}</li>
+                    <li><strong>server</strong>: server info: N {server} | T {server.time} | P {server.player_count}</li>
+                  
+                    <li><strong>triangle</strong>: A triangle is a polygon with three sides and three angles. It is the simplest polygon and forms the basis of many geometric constructions. Triangles can be classified by side length or angle size.</li>
+                    <li><strong>square</strong>: A square is a four-sided polygon with equal sides and right angles. It is both a rectangle and a rhombus. Squares are common in tiling and symmetry studies.</li>
+                    <li><strong>rectangle</strong>: A rectangle is a quadrilateral with four right angles. Opposite sides are equal and parallel. It is widely used in geometry and architecture.</li>
+                    <li><strong>pentagon</strong>: A pentagon is a polygon with five sides. Regular pentagons have equal sides and angles and appear in many natural and artistic designs. They are closely linked to the golden ratio.</li>
+                    <li><strong>hexagon</strong>: A hexagon is a six-sided polygon. Regular hexagons tile the plane perfectly without gaps. They commonly appear in crystals and honeycombs.</li>
+                    <li><strong>heptagon</strong>: A heptagon is a seven-sided polygon. Regular heptagons cannot be constructed exactly with a compass and straightedge. They are relatively rare in practical design.</li>
+                    <li><strong>octagon</strong>: An octagon is an eight-sided polygon. Regular octagons appear in stop signs and architecture. They combine near-circular shape with flat edges.</li>
+                    <li><strong>enneagon</strong>: An enneagon is a polygon with nine sides. Regular enneagons have rotational symmetry of order nine. They are also called nonagons.</li>
+                    <li><strong>decagon</strong>: A decagon is a ten-sided polygon. Regular decagons are closely related to pentagons and the golden ratio. They have ten equal angles and sides.</li>
+                    <li><strong>dodecagon</strong>: A dodecagon is a polygon with twelve sides. Regular dodecagons tile the plane with triangles and squares. They are often used in tiling patterns.</li>
+                  
+                    <li><strong>pentagram</strong>: A pentagram is a five-pointed star polygon formed from a regular pentagon. It has intersecting diagonals that create smaller pentagons inside. The shape is strongly associated with the golden ratio.</li>
+                    <li><strong>hexagram</strong>: A hexagram is a six-pointed star formed by overlapping two equilateral triangles. It is not a single continuous star polygon but a compound figure. It has strong symmetry and cultural significance.</li>
+                    <li><strong>heptagram</strong>: A heptagram is a seven-pointed star polygon. It can be constructed in multiple forms depending on how vertices are connected. Heptagrams have complex internal intersections.</li>
+                    <li><strong>octagram</strong>: An octagram is an eight-pointed star polygon or compound star. It can be formed by overlapping squares or by step connections on an octagon. Octagrams often appear in decorative art.</li>
+                    <li><strong>enneagram</strong>: An enneagram is a nine-pointed star polygon. It is typically drawn by connecting every second or fourth vertex of a nonagon. The shape has both geometric and symbolic interpretations.</li>
+                    <li><strong>decagram</strong>: A decagram is a ten-pointed star polygon. It can be constructed in different step patterns producing distinct shapes. Decagrams are related to pentagrams through symmetry.</li>
+                    <li><strong>hendecagram</strong>: An eleven-pointed star polygon formed by connecting vertices of a hendecagon at fixed intervals. These shapes are mostly studied in abstract geometry.</li>
+                    <li><strong>dodecagram</strong>: A twelve-pointed star polygon or compound star. Some forms are made by overlapping hexagons or triangles. Dodecagrams have high rotational symmetry.</li>
+                  
+                    <li><strong>hendecagon</strong>: A polygon with eleven sides. Regular hendecagons cannot be constructed exactly using classical tools. They are mainly studied in theoretical geometry.</li>
+                    <li><strong>icosagon</strong>: A polygon with twenty sides. Regular icosagons closely approximate a circle. They appear in advanced tiling and symmetry studies.</li>
+                    <li><strong>triacontagon</strong>: A polygon with thirty sides. It has very fine angular resolution when regular. It is often used as an approximation of circular shapes.</li>
+                    <li><strong>tetradecagon</strong>: A polygon with fourteen sides. Regular tetradecagons combine properties of heptagons and symmetry doubling. They appear in decorative tilings.</li>
+                    <li><strong>pentadecagon</strong>: A polygon with fifteen sides. Regular pentadecagons relate closely to triangles and pentagons. They are constructible with compass and straightedge.</li>
+                    <li><strong>icosipentagon</strong>: A polygon with twenty-five sides. Regular forms are rarely used outside abstract geometry. They are mostly studied for symmetry properties.</li>
+                  
+                    <li><strong>heptagram{7/2}</strong>: The {7/2} heptagram connects every second vertex of a heptagon. It forms a sharp, continuous seven-pointed star.</li>
+                    <li><strong>heptagram{7/3}</strong>: The {7/3} heptagram connects every third vertex of a heptagon. It creates a denser internal structure than {7/2}.</li>
+                    <li><strong>enneagram{9/2}</strong>: The {9/2} enneagram is formed by skipping one vertex on a nonagon. It creates a smooth nine-pointed star.</li>
+                    <li><strong>enneagram{9/4}</strong>: The {9/4} enneagram skips three vertices per step. It produces a much denser star with multiple intersections.</li>
+                    <li><strong>decagram{10/3}</strong>: The {10/3} decagram connects every third vertex of a decagon. It forms a sharp ten-pointed star.</li>
+                    <li><strong>dodecagram{12/5}</strong>: The {12/5} dodecagram is a star polygon with deep intersections and strong rotational symmetry.</li>
+                  </ul>
+            </div>
+        </div>
+        </div>
+    </div>
+</body>
+
+</html>
