@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Order of the Enneagram</title>
+    <link rel="stylesheet" href="https://unpkg.com/xp.css" />
+    <style>
+        body {
+            background-image: url('./img/bliss-winxp.jpg');
+            background-size: cover;
+            background-position: center;
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: "Tahoma", sans-serif;
+        }
+
+        .window {
+            width: 90vw;
+            max-width: 606px;
+            height: auto;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.5);
+        }
+
+        .window-body {
+            flex: 1;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            gap: 10px;
+            background: #ece9d8;
+        }
+
+        .fun-box {
+            border: 2px groove #ccc;
+            background: white;
+            padding: 10px;
+            flex: 1;
+            overflow: auto;
+        }
+
+        .xp-button {
+            background: #e0e0e0;
+            border: 1px solid #808080;
+            padding: 3px 10px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .xp-button:active {
+            background: #c0c0c0;
+            border-top: 1px solid #404040;
+            border-left: 1px solid #404040;
+        }
+
+        img {
+            display: inline-block;
+            margin: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="window">
+        <div class="title-bar">
+            <div class="title-bar-text">enneagram.exe</div>
+            <div class="title-bar-controls">
+                <button aria-label="Minimize"></button>
+                <button aria-label="Maximize"></button>
+                <button aria-label="Close" id="closeBtn"></button>
+            </div>
+        </div>
+
+        <div class="window-body">
+            <div class="fun-box" id="output">
+                <b>hello!</b><br><br>
+                are you here because you're interested in the group?<br>
+                or did your minecraft server get griefed by me/us?<br>
+                or, (even worse) do you want our meteor addon?<br>
+                <hr>
+                <b>well too bad!</b>
+                <hr>
+                <h1>Enneagram</h1>
+                <small>From <a href="https://polytope.miraheze.org" target="_blank" rel="noopener noreferrer">Polytope Wiki</a></small>
+                The <b>enneagram</b>b is a non-convex polygon with 9 sides. It is created by taking the first stellation of an enneagon. A regular enneagram has equal sides and equal angles.
+                
+                It is one of two regular 9-sided star polygons, with the other being the great enneagram. The name "enneagram" is often used to describe either of these two shapes.
+                
+                <h2>External links</h2>
+                <ul>
+                  <li>Bowers, Jonathan. <a href="http://www.polytope.net/hedrondude/polygons.htm" target="_blank" rel="noopener noreferrer">"Regular Polygons and Other Two Dimensional Shapes"</a>.</li>
+                  <li>Wikipedia contributors. <a href="https://en.wikipedia.org/wiki/Enneagram_(geometry)" target="_blank" rel="noopener noreferrer">"Enneagram (geometry)"</a>.</li>
+                </ul>
+            </div>
+        </div>
+        </div>
+    </div>
+</body>
+
+</html>
