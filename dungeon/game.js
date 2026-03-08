@@ -109,9 +109,9 @@ function generateMap(){
 
 // ======== Icons ========
 function icon(name){
-    let img=document.createElement("img");
-    img.src=icons[name];
-    img.classList.add(name==="player"?"player-img":"");
+    let img = document.createElement("img");
+    img.src = icons[name];
+    if(name === "player") img.classList.add("player-img");
     return img;
 }
 
