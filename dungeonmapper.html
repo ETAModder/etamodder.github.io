@@ -2,46 +2,22 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<title>Map Generator</title>
 <style>
-body{
-font-family:sans-serif;
-display:flex;
-flex-direction:column;
-align-items:center;
-margin-top:30px;
-}
-
-#grid{
-display:grid;
-grid-template-columns:repeat(5,70px);
-grid-template-rows:repeat(5,70px);
-gap:4px;
-margin-bottom:20px;
-}
-
-.cell{
-width:70px;
-height:70px;
-border:1px solid #444;
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:28px;
-}
-
-button{
-padding:10px 18px;
-font-size:16px;
-cursor:pointer;
-}
+body{font-family:sans-serif;text-align:center;margin-top:30px}
+#grid{display:grid;grid-template-columns:repeat(5,60px);gap:4px;justify-content:center;margin-bottom:20px}
+.cell{width:60px;height:60px;border:1px solid #000;display:flex;align-items:center;justify-content:center;font-size:22px}
 </style>
 </head>
 <body>
 
+<h2>Map Generator</h2>
+
 <div id="grid"></div>
-<button id="gen">Generate Map</button>
+<button onclick="generate()">Generate Map</button>
 
 <script>
+
 const grid=document.getElementById("grid")
 
 for(let i=0;i<25;i++){
@@ -50,29 +26,29 @@ d.className="cell"
 grid.appendChild(d)
 }
 
+function randCell(){
+return [Math.floor(Math.random()*4),Math.floor(Math.random()*5)]
+}
+
 function generate(){
 
-let map=[]
-for(let r=0;r<5;r++){
-map[r]=[]
-for(let c=0;c<5;c++) map[r][c]="coin"
-}
+let map=[...Array(5)].map(()=>Array(5).fill("coin"))
 
-let placed=0
-while(placed<4){
-let c=Math.floor(Math.random()*5)
-if(map[0][c]=="coin"){
-map[0][c]="ogre"
-placed++
+let ogres=0
+while(ogres<4){
+let [r,c]=randCell()
+if(map[r][c]=="coin"){
+map[r][c]="ogre"
+ogres++
 }
 }
 
-placed=0
-while(placed<2){
-let c=Math.floor(Math.random()*5)
-if(map[0][c]=="coin"){
-map[0][c]="treasure"
-placed++
+let treasure=0
+while(treasure<2){
+let [r,c]=randCell()
+if(map[r][c]=="coin"){
+map[r][c]="treasure"
+treasure++
 }
 }
 
@@ -84,21 +60,21 @@ if(map[r][c]!="coin") continue
 let diag=false
 let ortho=false
 
-let d1=[[1,1],[1,-1],[-1,1],[-1,-1]]
-for(let d of d1){
-let rr=r+d[0]
-let cc=c+d[1]
-if(rr>=0&&rr<5&&cc>=0&&cc<5){
-if(map[rr][cc]=="ogre") diag=true
-}
+for(let dr=-1;dr<=1;dr++){
+for(let dc=-1;dc<=1;dc++){
+
+if(dr==0 && dc==0) continue
+
+let rr=r+dr
+let cc=c+dc
+
+if(rr<0||rr>4||cc<0||cc>4) continue
+
+if(map[rr][cc]=="ogre"){
+if(Math.abs(dr)==1 && Math.abs(dc)==1) diag=true
+if(dr==0 || dc==0) ortho=true
 }
 
-let d2=[[1,0],[-1,0],[0,1],[0,-1]]
-for(let d of d2){
-let rr=r+d[0]
-let cc=c+d[1]
-if(rr>=0&&rr<5&&cc>=0&&cc<5){
-if(map[rr][cc]=="ogre") ortho=true
 }
 }
 
@@ -111,22 +87,22 @@ else if(ortho) map[r][c]="goblin"
 for(let r=0;r<5;r++){
 for(let c=0;c<5;c++){
 
-let cell=grid.children[r*5+c]
 let v=map[r][c]
+let cell=grid.children[r*5+c]
 
-if(v=="ogre") cell.textContent="👹"
-else if(v=="treasure") cell.textContent="💰"
-else if(v=="castle") cell.textContent="🏰"
-else if(v=="goblin") cell.textContent="👺"
-else cell.textContent="🪙"
-
-}
-}
+if(v=="ogre") cell.textContent="O"
+else if(v=="treasure") cell.textContent="T"
+else if(v=="castle") cell.textContent="C"
+else if(v=="goblin") cell.textContent="G"
+else cell.textContent="$"
 
 }
+}
 
-document.getElementById("gen").onclick=generate
+}
+
 generate()
+
 </script>
 
 </body>
