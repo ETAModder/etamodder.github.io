@@ -205,9 +205,17 @@ function end(win){
 
 // ======== New Game =======
 function newGame(){
-    visited=new Set();
-    player={r:3,c:2};
+    // Clear all cell contents
+    document.querySelectorAll(".cell").forEach(c => c.innerHTML = "");
+
+    visited = new Set();
+    player = {r:3, c:2};
     coins=0; ogres=0; treasureFound=0; goblinsFound=0; castlesFound=0;
+
+    if(playerIcon){
+        playerIcon.style.transform = `translate(0px,0px)`; // or starting cell
+    }
+
     generateMap();
     updateStats();
     draw();

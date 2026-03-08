@@ -69,7 +69,7 @@ margin-top:15px;
 .cell img.player-img{
     width:32px;
     height:32px;
-    transition: transform 0.2s ease; /* smooth slide */
+    transition: transform 0.5s ease; /* smooth slide */
 }
 
 .grid-wrapper{
