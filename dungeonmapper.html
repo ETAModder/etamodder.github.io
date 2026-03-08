@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+body{
+font-family:sans-serif;
+display:flex;
+flex-direction:column;
+align-items:center;
+margin-top:30px;
+}
+
+#grid{
+display:grid;
+grid-template-columns:repeat(5,70px);
+grid-template-rows:repeat(5,70px);
+gap:4px;
+margin-bottom:20px;
+}
+
+.cell{
+width:70px;
+height:70px;
+border:1px solid #444;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:30px;
+}
+
+button{
+padding:10px 18px;
+font-size:16px;
+cursor:pointer;
+}
+</style>
+</head>
+<body>
+
+<div id="grid"></div>
+<button onclick="generate()">Generate Map</button>
+
+<script>
+const grid=document.getElementById("grid")
+
+for(let i=0;i<25;i++){
+let d=document.createElement("div")
+d.className="cell"
+grid.appendChild(d)
+}
+
+function get(r,c){
+return grid.children[r*5+c]
+}
+
+function generate(){
+
+let map=[...Array(5)].map(()=>Array(5).fill("coin"))
+
+let ogres=0
+let treasure=0
+
+while(ogres<4){
+let c=Math.floor(Math.random()*5)
+if(map[0][c]=="coin"){
+map[0][c]="ogre"
+ogres++
+}
+}
+
+while(treasure<2){
+let c=Math.floor(Math.random()*5)
+if(map[0][c]=="coin"){
+map[0][c]="treasure"
+treasure++
+}
+}
+
+for(let r=0;r<5;r++){
+for(let c=0;c<5;c++){
+
+if(map[r][c]!="coin") continue
+
+let diag=false
+let ortho=false
+
+let dirs=[[1,1],[1,-1],[-1,1],[-1,-1]]
+for(let d of dirs){
+let rr=r+d[0]
+let cc=c+d[1]
+if(rr>=0&&rr<5&&cc>=0&&cc<5&&map[rr][cc]=="ogre") diag=true
+}
+
+let dirs2=[[1,0],[-1,0],[0,1],[0,-1]]
+for(let d of dirs2){
+let rr=r+d[0]
+let cc=c+d[1]
+if(rr>=0&&rr<5&&cc>=0&&cc<5&&map[rr][cc]=="ogre") ortho=true
+}
+
+if(diag) map[r][c]="castle"
+else if(ortho) map[r][c]="goblin"
+
+}
+}
+
+for(let r=0;r<5;r++){
+for(let c=0;c<5;c++){
+
+let cell=get(r,c)
+let v=map[r][c]
+
+if(v=="ogre") cell.textContent="👹"
+else if(v=="treasure") cell.textContent="💰"
+else if(v=="castle") cell.textContent="🏰"
+else if(v=="goblin") cell.textContent="👺"
+else cell.textContent="🪙"
+
+}
+}
+
+}
+
+generate()
+</script>
+
+</body>
+</html>
