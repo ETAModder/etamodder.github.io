@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>DayReaver Anarchy</title>
+<link rel="stylesheet" href="https://unpkg.com/98.css">
+<style>
+body {
+  background: teal;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  font-family: "MS Sans Serif", sans-serif;
+}
+
+.window {
+  width: 420px;
+}
+
+.ip-box {
+  display: flex;
+  gap: 6px;
+  margin-top: 10px;
+}
+
+input {
+  flex: 1;
+}
+</style>
+</head>
+<body>
+
+<div class="window">
+  <div class="title-bar">
+    <div class="title-bar-text">DayReaver Anarchy</div>
+    <div class="title-bar-controls">
+      <button aria-label="Minimize"></button>
+      <button aria-label="Maximize"></button>
+      <button aria-label="Close"></button>
+    </div>
+  </div>
+
+  <div class="window-body">
+    <h3>Welcome to DayReaver Anarchy</h3>
+
+    <p>
+      Creative Mode for everyone<br>
+      No anticheat<br>
+      No rules
+    </p>
+
+    <fieldset>
+      <legend>Server IP</legend>
+      <div class="ip-box">
+        <input id="ip" type="text" value="dayreaver.playit.plus" readonly>
+        <button onclick="copyIP()">Copy</button>
+      </div>
+    </fieldset>
+  </div>
+</div>
+
+<script>
+function copyIP() {
+  const ip = document.getElementById("ip");
+  ip.select();
+  ip.setSelectionRange(0, 99999);
+  navigator.clipboard.writeText(ip.value);
+  alert("Copied: " + ip.value);
+}
+</script>
+
+</body>
+</html>
