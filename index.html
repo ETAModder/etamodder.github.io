@@ -73,8 +73,24 @@
         .badges {
             display: flex;
             flex-wrap: wrap;
-            gap: 4px;
             justify-content: center;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .badges img {
+            display: block;
+            width: 88px;
+            height: 31px;
+        }
+
+        .badges a {
+            display: block;
+            line-height: 0;
+        }
+
+        .badges > * {
+            flex: 0 0 auto;
         }
 
         img {
