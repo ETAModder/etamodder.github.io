@@ -71,31 +71,23 @@
         }
 
         .badges {
-            display: flex;
-            flex-wrap: wrap;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, 88px);
             justify-content: center;
-            align-items: center;
             gap: 4px;
         }
 
         .badges img {
-            display: block;
             width: 88px;
             height: 31px;
+            display: block;
         }
 
         .badges a {
             display: block;
+            width: 88px;
+            height: 31px;
             line-height: 0;
-        }
-
-        .badges > * {
-            flex: 0 0 auto;
-        }
-
-        img {
-            display: inline-block;
-            margin: auto;
         }
     </style>
     <link rel="stylesheet" type="text/css" href="https://unpkg.com/clippyjs@0.0.3/assets/clippy.css" media="all">
