@@ -89,6 +89,21 @@
             height: 31px;
             line-height: 0;
         }
+
+        .links-area {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+        
+        .nerd-badge {
+            margin-left: 16px;
+            flex-shrink: 0;
+        }
+        
+        .nerd-badge img {
+            display: block;
+        }
     </style>
     <link rel="stylesheet" type="text/css" href="https://unpkg.com/clippyjs@0.0.3/assets/clippy.css" media="all">
 </head>
@@ -109,26 +124,33 @@
                 <b>hello</b><br><br>
                 this little site has nothing cool or<br>
                 interesting at all. why are you here<br>
-                <ul>
-                    <li><a href="./blog.html" target="_blank" rel="noopener noreferrer">BLOG!</a></li>
-                    <li><a href="./dra.html" target="_blank" rel="noopener noreferrer">DayReaver Anarchy minecraft
-                            server</a></li>
-                    <li><a href="./enneagram.html" target="_blank" rel="noopener noreferrer">enneagram (geometry &
-                            group)</a></li>
-                    <li><a href="./hdkill.html" target="_blank" rel="noopener noreferrer">hardware "killer"</a></li>
-                    <li><a href="./xd.html" target="_blank" rel="noopener noreferrer">epic gamer pog</a></li>
-                    <li><a href="./projects.html" target="_blank" rel="noopener noreferrer">my github repos</a></li>
-                    <li><a href="./files.html" target="_blank" rel="noopener noreferrer">file upload-o-tron</a></li>
-                    <li><a href="./sysinfo.html" target="_blank" rel="noopener noreferrer">system info</a></li>
-                    <li><a href="./vnc.html" target="_blank" rel="noopener noreferrer">vnc connecter</a></li>
-                    <li><a href="./pacman.html" target="_blank" rel="noopener noreferrer">pac man</a></li>
-                    <li><a href="./mcemoji.html" target="_blank" rel="noopener noreferrer">text 2 mc emojis</a></li>
-                    <li><a href="./graph.html" target="_blank" rel="noopener noreferrer">web crawler graph</a></li>
-                    <li><a href="./88x31.html" target="_blank" rel="noopener noreferrer">the 88x31 for this site</a></li>
-                    <li><a href="./dungeongenerator.html" target="_blank" rel="noopener noreferrer">generate
-                            DungeonMapper maps</a></li>
-                    <li><a href="./dungeon/index.html" target="_blank" rel="noopener noreferrer">play DungeonMapper</a></li>
-                </ul>
+                <div class="links-area">
+                    <ul>
+                        <li><a href="./blog.html" target="_blank">BLOG!</a></li>
+                        <li><a href="./dra.html" target="_blank">DayReaver Anarchy minecraft server</a></li>
+                        <li><a href="./enneagram.html" target="_blank">enneagram (geometry & group)</a></li>
+                        <li><a href="./hdkill.html" target="_blank">hardware "killer"</a></li>
+                        <li><a href="./xd.html" target="_blank">epic gamer pog</a></li>
+                        <li><a href="./projects.html" target="_blank">my github repos</a></li>
+                        <li><a href="./files.html" target="_blank">file upload-o-tron</a></li>
+                        <li><a href="./sysinfo.html" target="_blank">system info</a></li>
+                        <li><a href="./vnc.html" target="_blank">vnc connecter</a></li>
+                        <li><a href="./pacman.html" target="_blank">pac man</a></li>
+                        <li><a href="./mcemoji.html" target="_blank">text 2 mc emojis</a></li>
+                        <li><a href="./graph.html" target="_blank">web crawler graph</a></li>
+                        <li><a href="./88x31.html" target="_blank">the 88x31 for this site</a></li>
+                        <li><a href="./dungeongenerator.html" target="_blank">generate DungeonMapper maps</a></li>
+                        <li><a href="./dungeon/index.html" target="_blank">play DungeonMapper</a></li>
+                    </ul>
+                
+                    <div class="nerd-badge">
+                        <a href="http://www.nerdtests.com/ft_nt2.php">
+                            <img
+                                src="http://www.nerdtests.com/images/badge/nt2/fc5461c43975f355.png"
+                                alt="Mega-Dorky Nerd God">
+                        </a>
+                    </div>
+                </div>
                 <hr>
                 <div class="webring">
                     <span
