@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Auct</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        :root {
+            --background: #111111;
+            --surface: #181818;
+            --border: #333333;
+            --text: #eeeeee;
+            --muted: #888888;
+            --hover: #222222;
+        }
+
+        body {
+            margin: 0;
+            background: var(--background);
+            color: var(--text);
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .container {
+            width: min(1100px, calc(100% - 32px));
+            margin: 0 auto;
+            padding: 40px 0;
+        }
+
+        header {
+            margin-bottom: 24px;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 28px;
+            font-weight: normal;
+        }
+
+        .subtitle {
+            margin-top: 5px;
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        .editors {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            border: 1px solid var(--border);
+        }
+
+        .editor {
+            min-width: 0;
+        }
+
+        .editor + .editor {
+            border-left: 1px solid var(--border);
+        }
+
+        .editor-title {
+            padding: 10px 12px;
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+            color: var(--muted);
+            font-size: 12px;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        textarea {
+            display: block;
+            width: 100%;
+            height: 350px;
+            padding: 14px;
+            resize: vertical;
+            border: 0;
+            outline: none;
+            background: var(--background);
+            color: var(--text);
+            font: 15px/1.6 Consolas, "Courier New", monospace;
+        }
+
+        textarea::placeholder {
+            color: #555555;
+        }
+
+        .buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 15px 0 30px;
+        }
+
+        button {
+            padding: 9px 14px;
+            border: 1px solid var(--border);
+            background: var(--surface);
+            color: var(--text);
+            font: inherit;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: var(--hover);
+        }
+
+        button:active {
+            background: #2a2a2a;
+        }
+
+        .rules {
+            border-top: 1px solid var(--border);
+            padding-top: 20px;
+        }
+
+        .rules h2 {
+            margin: 0 0 16px;
+            font-size: 15px;
+            font-weight: normal;
+        }
+
+        .rules h3 {
+            margin: 18px 0 8px;
+            color: #aaa;
+            font-size: 13px;
+            font-weight: normal;
+        }
+
+        .rule-list {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 5px 30px;
+            color: var(--muted);
+            font: 13px/1.7 Consolas, "Courier New", monospace;
+        }
+
+        .notice {
+            margin-top: 20px;
+            padding: 12px;
+            border: 1px solid var(--border);
+            color: var(--muted);
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .footer {
+            margin-top: 30px;
+            color: #555;
+            font-size: 12px;
+        }
+
+        @media (max-width: 700px) {
+            .editors {
+                grid-template-columns: 1fr;
+            }
+
+            .editor + .editor {
+                border-left: 0;
+                border-top: 1px solid var(--border);
+            }
+
+            .rule-list {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 450px) {
+            .rule-list {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <header>
+        <h1>Auct</h1>
+
+        <div class="subtitle">
+            Converts Latin into Auct, the language<br>
+            of admins on Admin Abuse. You will need<br>
+            to use a translator website if you do<br>
+            not know how to read and write Latin.<br>
+        </div>
+    </header>
+
+
+    <div class="editors">
+
+        <div class="editor">
+
+            <div class="editor-title">
+                Latin
+            </div>
+
+            <textarea
+                id="latin"
+                spellcheck="false"
+                placeholder="Enter Latin text..."
+            ></textarea>
+
+        </div>
+
+
+        <div class="editor">
+
+            <div class="editor-title">
+                Auct
+            </div>
+
+            <textarea
+                id="auct"
+                spellcheck="false"
+                placeholder="Transformed text..."
+            ></textarea>
+
+        </div>
+
+    </div>
+
+
+    <div class="buttons">
+
+        <button onclick="latinToAuct()">
+            Latin > Auct
+        </button>
+
+        <button onclick="auctToLatin()">
+            Auct > Latin
+        </button>
+
+        <button onclick="copyAuct()">
+            Copy Auct
+        </button>
+
+        <button onclick="copyLatin()">
+            Copy Latin
+        </button>
+
+        <button onclick="clearAll()">
+            Clear
+        </button>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/*
+ * ============================================================
+ * AUCT TOKENIZER
+ * ============================================================
+ *
+ * Auct is treated as an encoding rather than a collection
+ * of string replacements.
+ *
+ * Latin is scanned from left to right.
+ *
+ * At every position, the parser attempts to find the longest
+ * known Latin token.
+ *
+ * Example:
+ *
+ *     "philosophia"
+ *
+ * becomes:
+ *
+ *     ph | i | l | o | s | o | ph | i | a
+ *
+ * rather than:
+ *
+ *     p | h | i | ...
+ *
+ * This is what allows combinations to have priority.
+ *
+ * ============================================================
+ */
+
+
+/*
+ * ------------------------------------------------------------
+ * TOKEN DEFINITIONS
+ * ------------------------------------------------------------
+ *
+ * Longest tokens MUST appear first.
+ */
+
+
+/*
+ * Common Latin combinations.
+ *
+ * These are intentionally assigned unique Auct tokens.
+ */
+const COMBINATIONS = [
+    { latin: "ae", auct: "e"  },
+    { latin: "oe", auct: "ø"  },
+    { latin: "ph", auct: "f"  },
+    { latin: "th", auct: "t"  },
+    { latin: "ch", auct: "c"  },
+    { latin: "rh", auct: "r"  },
+    { latin: "qu", auct: "kw" }
+];
+
+
+/*
+ * Individual Latin letters.
+ *
+ * Most letters can stay exactly as they are.
+ *
+ * Letters which would collide with combination outputs
+ * receive an escaped representation.
+ */
+const LETTERS = {
+
+    "a": "a",
+    "b": "b",
+
+    "c": "k",
+
+    "d": "d",
+
+    /*
+     * Plain e is escaped because "e" is reserved for ae.
+     */
+    "e": "~e",
+
+    /*
+     * Plain f is escaped because f is reserved for ph.
+     */
+    "f": "~f",
+
+    "g": "g",
+    "h": "h",
+    "i": "i",
+
+    "j": "y",
+
+    "k": "~k",
+    "l": "l",
+    "m": "m",
+    "n": "n",
+    "o": "o",
+    "p": "p",
+
+    /*
+     * q is escaped because q is not otherwise needed as an
+     * Auct output and we want to reserve it for future rules.
+     */
+    "q": "~q",
+
+    "r": "~r",
+    "s": "s",
+
+    /*
+     * t is escaped because t is reserved for th.
+     */
+    "t": "~t",
+
+    "u": "u",
+
+    "v": "w",
+
+    "w": "~w",
+
+    "x": "ks",
+
+    "y": "~y",
+
+    "z": "z"
+};
+
+
+/*
+ * ------------------------------------------------------------
+ * REVERSE TOKEN TABLE
+ * ------------------------------------------------------------
+ *
+ * These are generated automatically.
+ */
+
+
+/*
+ * Combination lookup.
+ */
+const combinationLookup = new Map();
+
+for (const token of COMBINATIONS) {
+    combinationLookup.set(
+        token.auct,
+        token.latin
+    );
+}
+
+
+/*
+ * Letter lookup.
+ */
+const letterLookup = new Map();
+
+for (const [latin, auct] of Object.entries(LETTERS)) {
+    letterLookup.set(
+        auct,
+        latin
+    );
+}
+
+
+/*
+ * ------------------------------------------------------------
+ * CASE HANDLING
+ * ------------------------------------------------------------
+ */
+
+function applyCase(original, replacement) {
+
+    if (
+        original.length > 0 &&
+        original === original.toUpperCase()
+    ) {
+        return replacement.toUpperCase();
+    }
+
+    if (
+        original.length > 0 &&
+        original[0] === original[0].toUpperCase()
+    ) {
+        return (
+            replacement.charAt(0).toUpperCase() +
+            replacement.slice(1)
+        );
+    }
+
+    return replacement;
+}
+
+
+/*
+ * ------------------------------------------------------------
+ * LATIN TOKENIZER
+ * ------------------------------------------------------------
+ */
+
+function tokenizeLatin(text) {
+
+    const tokens = [];
+
+    let i = 0;
+
+
+    while (i < text.length) {
+
+        /*
+         * Preserve whitespace and punctuation.
+         */
+        if (!/[a-zA-Z]/.test(text[i])) {
+
+            tokens.push({
+                type: "literal",
+                value: text[i]
+            });
+
+            i++;
+            continue;
+        }
+
+
+        /*
+         * Try combinations first.
+         *
+         * This is the "longest match" part of the parser.
+         */
+        let matched = false;
+
+
+        for (const rule of COMBINATIONS) {
+
+            const part = text.slice(
+                i,
+                i + rule.latin.length
+            );
+
+
+            if (
+                part.toLowerCase() ===
+                rule.latin.toLowerCase()
+            ) {
+
+                tokens.push({
+                    type: "combination",
+                    latin: part,
+                    auct: applyCase(
+                        part,
+                        rule.auct
+                    )
+                });
+
+                i += rule.latin.length;
+                matched = true;
+
+                break;
+            }
+        }
+
+
+        if (matched) {
+            continue;
+        }
+
+
+        /*
+         * Individual letter.
+         */
+        const letter = text[i];
+
+        const encoded =
+            LETTERS[letter.toLowerCase()];
+
+
+        if (encoded !== undefined) {
+
+            tokens.push({
+                type: "letter",
+                latin: letter,
+                auct: applyCase(
+                    letter,
+                    encoded
+                )
+            });
+
+            i++;
+            continue;
+        }
+
+
+        /*
+         * Unknown character.
+         *
+         * Preserve it literally.
+         */
+        tokens.push({
+            type: "literal",
+            value: letter
+        });
+
+        i++;
+    }
+
+
+    return tokens;
+}
+
+
+/*
+ * ------------------------------------------------------------
+ * LATIN → AUCT
+ * ------------------------------------------------------------
+ */
+
+function latinToAuct() {
+
+    const input =
+        document.getElementById("latin").value;
+
+    const tokens =
+        tokenizeLatin(input);
+
+
+    let output = "";
+
+
+    for (const token of tokens) {
+
+        if (token.type === "literal") {
+            output += token.value;
+        }
+        else {
+            output += token.auct;
+        }
+    }
+
+    output = output.replace(/~/gi, "");
+
+    document.getElementById("auct").value =
+        output;
+}
+
+
+/*
+ * ------------------------------------------------------------
+ * AUCT TOKENIZER
+ * ------------------------------------------------------------
+ *
+ * The reverse tokenizer also uses longest-match parsing.
+ *
+ * Escape sequences beginning with "~" always represent
+ * exactly one Latin letter.
+ */
+
+
+/*
+ * All Auct tokens sorted longest-first.
+ */
+function getAuctTokens() {
+
+    const tokens = [];
+
+
+    for (const [auct, latin] of combinationLookup) {
+
+        tokens.push({
+            auct,
+            latin,
+            priority: 2
+        });
+    }
+
+
+    for (const [auct, latin] of letterLookup) {
+
+        tokens.push({
+            auct,
+            latin,
+            priority: 1
+        });
+    }
+
+
+    tokens.sort(
+        (a, b) =>
+            b.auct.length - a.auct.length
+    );
+
+
+    return tokens;
+}
+
+
+const AUCT_TOKENS =
+    getAuctTokens();
+
+
+/*
+ * ------------------------------------------------------------
+ * AUCT → LATIN
+ * ------------------------------------------------------------
+ */
+
+function tokenizeAuct(text) {
+
+    const tokens = [];
+
+    let i = 0;
+
+
+    while (i < text.length) {
+
+        /*
+         * Escape sequence.
+         *
+         * ~x means that x was a literal encoded
+         * Latin character.
+         */
+        if (text[i] === "~") {
+
+            const next = text[i + 1];
+
+
+            if (next !== undefined) {
+
+                const sequence =
+                    "~" + next;
+
+
+                const latin =
+                    letterLookup.get(sequence);
+
+
+                if (latin !== undefined) {
+
+                    tokens.push({
+                        type: "letter",
+                        auct: sequence,
+                        latin: applyCase(
+                            sequence,
+                            latin
+                        )
+                    });
+
+                    i += 2;
+                    continue;
+                }
+            }
+
+
+            /*
+             * Unknown escape.
+             * Preserve it literally.
+             */
+            tokens.push({
+                type: "literal",
+                value: "~"
+            });
+
+            i++;
+            continue;
+        }
+
+
+        /*
+         * Try every known Auct token.
+         */
+        let matched = false;
+
+
+        for (const token of AUCT_TOKENS) {
+
+            const part = text.slice(
+                i,
+                i + token.auct.length
+            );
+
+
+            if (
+                part.toLowerCase() ===
+                token.auct.toLowerCase()
+            ) {
+
+                tokens.push({
+                    type: "token",
+                    auct: part,
+                    latin: applyCase(
+                        part,
+                        token.latin
+                    )
+                });
+
+                i += token.auct.length;
+                matched = true;
+
+                break;
+            }
+        }
+
+
+        if (matched) {
+            continue;
+        }
+
+
+        /*
+         * Unknown character.
+         */
+        tokens.push({
+            type: "literal",
+            value: text[i]
+        });
+
+        i++;
+    }
+
+
+    return tokens;
+}
+
+
+/*
+ * ------------------------------------------------------------
+ * AUCT → LATIN
+ * ------------------------------------------------------------
+ */
+
+function auctToLatin() {
+
+    const input =
+        document.getElementById("auct").value;
+
+    const tokens =
+        tokenizeAuct(input);
+
+
+    let output = "";
+
+
+    for (const token of tokens) {
+
+        if (token.type === "literal") {
+            output += token.value;
+        }
+        else {
+            output += token.latin;
+        }
+    }
+
+
+    document.getElementById("latin").value =
+        output;
+}
+
+
+/*
+ * ------------------------------------------------------------
+ * COPY
+ * ------------------------------------------------------------
+ */
+
+async function copyAuct() {
+
+    const text =
+        document.getElementById("auct").value;
+
+    if (!text) {
+        return;
+    }
+
+
+    try {
+
+        await navigator.clipboard.writeText(text);
+
+    }
+    catch {
+
+        const textarea =
+            document.getElementById("auct");
+
+        textarea.select();
+
+        document.execCommand("copy");
+
+        textarea.setSelectionRange(0, 0);
+    }
+}
+
+
+async function copyLatin() {
+
+    const text =
+        document.getElementById("latin").value;
+
+    if (!text) {
+        return;
+    }
+
+
+    try {
+
+        await navigator.clipboard.writeText(text);
+
+    }
+    catch {
+
+        const textarea =
+            document.getElementById("latin");
+
+        textarea.select();
+
+        document.execCommand("copy");
+
+        textarea.setSelectionRange(0, 0);
+    }
+}
+
+
+/*
+ * ------------------------------------------------------------
+ * CLEAR
+ * ------------------------------------------------------------
+ */
+
+function clearAll() {
+
+    document.getElementById("latin").value = "";
+    document.getElementById("auct").value = "";
+
+    document.getElementById("latin").focus();
+}
+
+</script>
+
+</body>
+</html>
