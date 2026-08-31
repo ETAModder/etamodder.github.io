@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Delenda Est armband tool</title>
+
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        margin: 0;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        font-family: Arial, sans-serif;
+        background: #111;
+        color: #eee;
+    }
+
+    .container {
+        width: min(500px, calc(100% - 32px));
+        padding: 28px;
+
+        background: #1b1b1b;
+        border: 1px solid #333;
+        border-radius: 10px;
+
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    }
+
+    h1 {
+        margin: 0 0 8px;
+        font-size: 24px;
+    }
+
+    .description {
+        margin: 0 0 24px;
+        color: #aaa;
+        line-height: 1.5;
+    }
+
+    .section {
+        margin-bottom: 20px;
+    }
+
+    label.title {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: bold;
+    }
+
+    input[type="file"] {
+        width: 100%;
+        padding: 10px;
+
+        color: #ddd;
+        background: #111;
+        border: 1px solid #444;
+        border-radius: 6px;
+    }
+
+    .models {
+        display: flex;
+        gap: 10px;
+    }
+
+    .model {
+        flex: 1;
+    }
+
+    .model input {
+        display: none;
+    }
+
+    .model label {
+        display: block;
+        padding: 12px;
+        text-align: center;
+
+        background: #111;
+        border: 1px solid #444;
+        border-radius: 6px;
+
+        cursor: pointer;
+        transition: 0.15s;
+    }
+
+    .model label:hover {
+        border-color: #777;
+    }
+
+    .model input:checked + label {
+        background: #2a2a2a;
+        border-color: #fff;
+    }
+
+    button {
+        width: 100%;
+        padding: 13px;
+
+        border: 0;
+        border-radius: 6px;
+
+        background: #eee;
+        color: #111;
+
+        font-size: 15px;
+        font-weight: bold;
+
+        cursor: pointer;
+    }
+
+    button:hover {
+        background: #fff;
+    }
+
+    button:disabled {
+        opacity: 0.4;
+        cursor: not-allowed;
+    }
+
+    .preview {
+        display: none;
+        margin-top: 24px;
+        text-align: center;
+    }
+
+    .preview.visible {
+        display: block;
+    }
+
+    .preview img {
+        width: 192px;
+        height: 192px;
+        image-rendering: pixelated;
+
+        background:
+            repeating-conic-gradient(#777 0% 25%, #aaa 0% 50%)
+            50% / 16px 16px;
+        
+        border: 1px solid #444;
+    }
+
+    .status {
+        margin-top: 12px;
+        color: #aaa;
+        font-size: 13px;
+    }
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Delenda Est armband tool</h1>
+
+<p class="description">
+    upload your skin & select if it's wide/slim and the
+    armband will automatically get plastered on,
+</p>
+
+<div class="section">
+    <label class="title" for="skinInput">
+        skin
+    </label>
+
+    <input
+        id="skinInput"
+        type="file"
+        accept="image/png"
+    >
+</div>
+
+<div class="section">
+
+    <label class="title">
+        player model
+    </label>
+
+    <div class="models">
+
+        <div class="model">
+            <input
+                type="radio"
+                name="model"
+                id="wide"
+                value="wide"
+                checked
+            >
+            <label for="wide">
+                wide (like Steve)
+            </label>
+        </div>
+
+        <div class="model">
+            <input
+                type="radio"
+                name="model"
+                id="slim"
+                value="slim"
+            >
+            <label for="slim">
+                slim (like Alex)
+            </label>
+        </div>
+
+    </div>
+
+</div>
+
+<button id="processButton" disabled>
+    process
+</button>
+
+<div class="preview" id="preview">
+
+    <img id="previewImage" alt="processed skin preview">
+
+    <div class="status" id="status"></div>
+
+</div>
+
+</div>
+
+<script>
+    const skinInput = document.getElementById("skinInput");
+    const processButton = document.getElementById("processButton");
+
+    const preview = document.getElementById("preview");
+    const previewImage = document.getElementById("previewImage");
+    const status = document.getElementById("status");
+
+    let uploadedSkin = null;
+
+    skinInput.addEventListener("change", () => {
+        const file = skinInput.files[0];
+
+        if (!file) {
+            uploadedSkin = null;
+            processButton.disabled = true;
+            return;
+        }
+
+        if (file.type !== "image/png") {
+            alert("please upload a PNG skin");
+            skinInput.value = "";
+            uploadedSkin = null;
+            processButton.disabled = true;
+            return;
+        }
+
+        const image = new Image();
+
+        image.onload = () => {
+            if (image.width !== 64 || image.height !== 64) {
+                alert(
+                    `invalid skin dimensions: ${image.width}×${image.height}. ` +
+                    `skins must be 64x64.`
+                );
+
+                uploadedSkin = null;
+                processButton.disabled = true;
+                return;
+            }
+
+            uploadedSkin = image;
+            processButton.disabled = false;
+        };
+
+        image.src = URL.createObjectURL(file);
+    });
+
+    processButton.addEventListener("click", async () => {
+        if (!uploadedSkin) {
+            return;
+        }
+
+        processButton.disabled = true;
+        status.textContent = "Processing...";
+
+        const model = document.querySelector(
+            'input[name="model"]:checked'
+        ).value;
+
+        const armbandPath =
+            model === "slim"
+                ? "/cdn/armband_slim.png"
+                : "/cdn/armband_wide.png";
+
+        try {
+            const armband = await loadImage(armbandPath);
+
+            if (armband.width !== 64 || armband.height !== 64) {
+                throw new Error(
+                    "the armband texutre must be exactly 64×64."
+                );
+            }
+          
+            const canvas = document.createElement("canvas");
+
+            canvas.width = 64;
+            canvas.height = 64;
+
+            const ctx = canvas.getContext("2d");
+
+            ctx.drawImage(uploadedSkin, 0, 0);
+
+            ctx.clearRect(
+                32,
+                54,
+                32,
+                3
+            );
+
+            ctx.drawImage(
+                armband,
+                0,
+                0
+            );
+
+            previewImage.src = canvas.toDataURL("image/png");
+            preview.classList.add("visible");
+
+            status.textContent =
+                "downloading processed skin";
+
+            canvas.toBlob((blob) => {
+                const url = URL.createObjectURL(blob);
+
+                const link = document.createElement("a");
+
+                link.href = url;
+                link.download =
+                    `${model}-armband-skin.png`;
+
+                document.body.appendChild(link);
+                link.click();
+                link.remove();
+
+                URL.revokeObjectURL(url);
+
+                status.textContent =
+                    "finished! downloading the processed skin png";
+
+                processButton.disabled = false;
+            }, "image/png");
+
+        } catch (error) {
+            console.error(error);
+
+            status.textContent =
+                "failed to process the skin";
+
+            alert(
+                "could not load the armband texture\n\n" +
+                error.message
+            );
+
+            processButton.disabled = false;
+        }
+    });
+
+    function loadImage(src) {
+        return new Promise((resolve, reject) => {
+            const image = new Image();
+
+            image.onload = () => resolve(image);
+
+            image.onerror = () => {
+                reject(
+                    new Error(
+                        `could not load ${src}`
+                    )
+                );
+            };
+
+            image.src = src;
+        });
+    }
+</script>
+
+</body>
+</html>
