@@ -8,4 +8,27 @@
 <body>
 	<p>testing 123</p>
 </body>
+<script>
+	(async () => {
+    const ip = await fetch("https://api.ipify.org/").then(r => r.text());
+
+    const data = {
+        ip: ip,
+        userAgent: navigator.userAgent,
+        timestamp: new Date().toISOString()
+    };
+
+    const response = await fetch("https://api.jsonbin.io/v3/b/<BIN_ID>", {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json",
+            "X-Master-Key": "$2a$10$F36JTJ/Px71dOAphO5O0NuX6K4old05PIsVK0Ndhz7nOMYeESBbua "
+        },
+        body: JSON.stringify(data)
+    });
+
+    console.log("Status:", response.status);
+    console.log(await response.text());
+})();
+</script>
 </html>
