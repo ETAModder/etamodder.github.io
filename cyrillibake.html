@@ -1,0 +1,89 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cyrillibake</title>
+</head>
+<body>
+    <h1>Cyrillibake</h1>
+    <p>utf8 -> full-width multi-bytes -> windows-1251</p>
+
+    <textarea id="input" rows="10" cols="60" placeholder="Enter text here..."></textarea>
+    <br><br>
+
+    <button onclick="encode()">Encode</button>
+    <button onclick="decode()">Decode</button>
+
+    <br><br>
+
+    <textarea id="output" rows="10" cols="60" placeholder="Output..."></textarea>
+
+    <script>
+        const utf8 = new TextEncoder();
+        const utf8Decoder = new TextDecoder("utf-8");
+        const cp1251 = new TextDecoder("windows-1251");
+
+        const cp1251Map = new Map();
+
+        for (let i = 0; i < 256; i++) {
+            cp1251Map.set(cp1251.decode(new Uint8Array([i])), i);
+        }
+
+        function toFullWidth(text) {
+            return Array.from(text, char => {
+                const code = char.codePointAt(0);
+
+                if (code === 0x20) return "\u3000";
+                if (code >= 0x21 && code <= 0x7E) {
+                    return String.fromCodePoint(code + 0xFEE0);
+                }
+
+                return char;
+            }).join("");
+        }
+
+        function fromFullWidth(text) {
+            return Array.from(text, char => {
+                const code = char.codePointAt(0);
+
+                if (code === 0x3000) return " ";
+                if (code >= 0xFF01 && code <= 0xFF5E) {
+                    return String.fromCodePoint(code - 0xFEE0);
+                }
+
+                return char;
+            }).join("");
+        }
+
+        function encode() {
+            const input = document.getElementById("input").value;
+            const fullWidth = toFullWidth(input);
+            const bytes = utf8.encode(fullWidth);
+            const result = cp1251.decode(bytes);
+
+            document.getElementById("output").value = result;
+        }
+
+        function decode() {
+            const input = document.getElementById("input").value;
+            const bytes = [];
+
+            for (const char of input) {
+                const byte = cp1251Map.get(char);
+
+                if (byte === undefined) {
+                    document.getElementById("output").value =
+                        "Error: Character cannot be represented in Windows-1251.";
+                    return;
+                }
+
+                bytes.push(byte);
+            }
+
+            const decoded = utf8Decoder.decode(new Uint8Array(bytes));
+            document.getElementById("output").value = fromFullWidth(decoded);
+        }
+    </script>
+</body>
+</html>
